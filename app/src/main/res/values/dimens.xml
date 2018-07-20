@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="balanceTextSize">30sp</dimen>
+    <dimen name="balanceMargin">5dp</dimen>
+</resources>
