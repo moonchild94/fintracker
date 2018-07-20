@@ -39,11 +39,11 @@ dependencies {
     implementation "com.android.support:design:${supportLibrary}"
     implementation "com.android.support:support-v4:${supportLibrary}"
 
-    compile "com.google.dagger:dagger:${dagger}"
+    implementation "com.google.dagger:dagger:${dagger}"
     kapt "com.google.dagger:dagger-compiler:${dagger}"
 
-    compile "com.google.dagger:dagger-android:${dagger}"
-    compile "com.google.dagger:dagger-android-support:${dagger}"
+    implementation "com.google.dagger:dagger-android:${dagger}"
+    implementation "com.google.dagger:dagger-android-support:${dagger}"
     kapt "com.google.dagger:dagger-android-processor:${dagger}"
 
     testImplementation 'junit:junit:4.12'

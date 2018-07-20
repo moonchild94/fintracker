@@ -6,8 +6,12 @@ import ru.daryasoft.fintracker.ui.MainActivity
 import ru.daryasoft.fintracker.ui.MainFragment
 import javax.inject.Singleton
 import dagger.Binds
-import ru.daryasoft.fintracker.repository.FinanceTransactionRepository
-import ru.daryasoft.fintracker.repository.IFinanceTransactionRepository
+import ru.daryasoft.fintracker.calculator.FinCalculator
+import ru.daryasoft.fintracker.calculator.IFinCalculator
+import ru.daryasoft.fintracker.repository.FinTransactionRepository
+import ru.daryasoft.fintracker.repository.IFinTransactionRepository
+import ru.daryasoft.fintracker.repository.IRateRepository
+import ru.daryasoft.fintracker.repository.RateRepository
 
 
 /**
@@ -23,5 +27,13 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun provideFinanceTransactionRepository(financeTransactionRepository: FinanceTransactionRepository): IFinanceTransactionRepository
+    fun provideFinCalculator(finCalculator: FinCalculator): IFinCalculator
+
+    @Binds
+    @Singleton
+    fun provideFinTransactionRepository(finTransactionRepository: FinTransactionRepository): IFinTransactionRepository
+
+    @Binds
+    @Singleton
+    fun provideRateRepository(rateRepository: RateRepository): IRateRepository
 }

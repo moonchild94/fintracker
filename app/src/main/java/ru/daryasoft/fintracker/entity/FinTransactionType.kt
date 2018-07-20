@@ -1,5 +1,5 @@
 package ru.daryasoft.fintracker.entity
 
-enum class TransactionType {
+enum class FinTransactionType {
     INCOME, OUTCOME
 }

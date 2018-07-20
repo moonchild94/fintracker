@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:columnCount="2"
-    tools:context=".ui.MainFragment">
+    tools:context=".ui.MainFragment"
+    android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnWeight="1"
-        android:id="@+id/rubBalance"
+        android:id="@+id/balance"
         android:textSize="@dimen/balanceTextSize"
         android:layout_margin="@dimen/balanceMargin"
-        android:gravity="center"
-        android:text="100р" />
+        android:gravity="center" />
 
-    <TextView
+    <Spinner
+        android:id="@+id/currencySpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnWeight="1"
-        android:id="@+id/dollarBalance"
-        android:textSize="@dimen/balanceTextSize"
-        android:layout_margin="@dimen/balanceMargin"
-        android:gravity="center"
-        android:text="100$" />
+        android:gravity="center">
+    </Spinner>
 
-</GridLayout>
+</LinearLayout>
