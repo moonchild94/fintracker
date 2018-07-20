@@ -6,8 +6,13 @@
     <string name="title_fragment_operation">Операции</string>
     <string name="title_settings_menu_item">настройки</string>
     <string name="title_about_menu_item">о приложении</string>
+    <string name="title_back_menu_item">назад</string>
+
+    <string name="currency_list_preference_key">currency_list</string>
+    <string name="currency_settings">Настройки валюты</string>
+    <string name="currency_default">Основная валюта</string>
+    <string name="select_currency_default">Выберите основную валюту</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_back_menu_item">назад</string>
 </resources>
