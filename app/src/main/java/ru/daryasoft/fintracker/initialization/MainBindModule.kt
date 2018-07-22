@@ -11,11 +11,13 @@ import dagger.Binds
 import dagger.multibindings.IntoMap
 import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
-import ru.daryasoft.fintracker.repository.FinTransactionRepository
-import ru.daryasoft.fintracker.repository.IFinTransactionRepository
+import ru.daryasoft.fintracker.repository.TransactionRepository
+import ru.daryasoft.fintracker.repository.ITransactionRepository
 import ru.daryasoft.fintracker.repository.ICurrencyRepository
 import ru.daryasoft.fintracker.repository.CurrencyRepository
+import ru.daryasoft.fintracker.ui.TransactionsFragment
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
+import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
 import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 
 /**
@@ -29,13 +31,16 @@ interface MainBindModule {
     @ContributesAndroidInjector
     fun contributeMainFragmentInjector(): MainFragment
 
+    @ContributesAndroidInjector
+    fun contributeTransactionsFragmentInjector(): TransactionsFragment
+
     @Binds
     @Singleton
     fun bindFinCalculator(finCalculator: FinCalculator): IFinCalculator
 
     @Binds
     @Singleton
-    fun bindFinTransactionRepository(finTransactionRepository: FinTransactionRepository): IFinTransactionRepository
+    fun bindTransactionRepository(TransactionRepository: TransactionRepository): ITransactionRepository
 
     @Binds
     @Singleton
@@ -47,5 +52,10 @@ interface MainBindModule {
     @Binds
     @IntoMap
     @ViewModelKey(BalanceViewModel::class)
-    fun postListViewModel(viewModel: BalanceViewModel): ViewModel
+    fun postBalanceViewModel(viewModel: BalanceViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TransactionsViewModel::class)
+    fun postTransactionsViewModel(viewModel: TransactionsViewModel): ViewModel
 }

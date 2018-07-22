@@ -2,7 +2,7 @@ package ru.daryasoft.fintracker.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.design.widget.TabLayout
 import android.view.Menu
 import android.view.MenuItem
 import dagger.android.support.DaggerAppCompatActivity
@@ -18,6 +18,21 @@ class MainActivity : DaggerAppCompatActivity() {
         val adapter = MainFragmentPagerAdapter(this, supportFragmentManager)
         view_pager.adapter = adapter
         sliding_tabs.setupWithViewPager(view_pager)
+        sliding_tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                title = when (tab?.position) {
+                    0 -> getString(R.string.title_fragment_main)
+                    1 -> getString(R.string.title_fragment_operation)
+                    else -> ""
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -29,10 +44,6 @@ class MainActivity : DaggerAppCompatActivity() {
         return when (item.itemId) {
             R.id.settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
-            R.id.about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

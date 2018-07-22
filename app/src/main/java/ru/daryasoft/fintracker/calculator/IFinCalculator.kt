@@ -2,8 +2,8 @@ package ru.daryasoft.fintracker.calculator
 
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.entity.FinTransaction
+import ru.daryasoft.fintracker.entity.Transaction
 
 interface IFinCalculator {
-    fun sum(finTransactions: List<FinTransaction>, targetCurrency: Currency) : Balance
+    fun sum(transactions: List<Transaction>, targetCurrency: Currency) : Balance
 }

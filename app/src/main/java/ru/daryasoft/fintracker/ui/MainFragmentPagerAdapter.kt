@@ -12,7 +12,7 @@ class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> MainFragment.newInstance()
-            1 -> OperationFragment.newInstance()
+            1 -> TransactionsFragment.newInstance()
             else -> throw IllegalArgumentException()
         }
     }

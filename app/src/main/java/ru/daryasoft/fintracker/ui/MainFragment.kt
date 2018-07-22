@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,21 +22,23 @@ import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class MainFragment : DaggerFragment() {
+class MainFragment : DaggerFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    lateinit var balanceViewModel: BalanceViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        AndroidSupportInjection.inject(this)
+        balanceViewModel = getViewModel(viewModelFactory)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.title = getString(R.string.title_fragment_main)
-
-        val balanceViewModel: BalanceViewModel = getViewModel(viewModelFactory)
-
         currencySpinner.adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
         currencySpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
@@ -46,6 +49,8 @@ class MainFragment : DaggerFragment() {
             }
         }
 
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
         balanceViewModel.getBalance()
                 .observe(this@MainFragment, Observer<Balance> {
                     balance.text = it?.sum.toString()
@@ -53,8 +58,11 @@ class MainFragment : DaggerFragment() {
                 })
     }
 
-    private inline fun <reified T : ViewModel> getViewModel(viewModelFactory: ViewModelProvider.Factory): T =
-            ViewModelProviders.of(this, viewModelFactory)[T::class.java]
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == getString(R.string.currency_list_preference_key)) {
+            balanceViewModel.onDefaultCurrencyChanged()
+        }
+    }
 
     companion object {
         @JvmStatic

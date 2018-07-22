@@ -7,10 +7,10 @@ import ru.daryasoft.fintracker.calculator.IFinCalculator
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.repository.ICurrencyRepository
-import ru.daryasoft.fintracker.repository.IFinTransactionRepository
+import ru.daryasoft.fintracker.repository.ITransactionRepository
 import javax.inject.Inject
 
-class BalanceViewModel @Inject constructor(private val finTransactionRepository: IFinTransactionRepository,
+class BalanceViewModel @Inject constructor(private val transactionRepository: ITransactionRepository,
                                            private val currencyRepository: ICurrencyRepository,
                                            private val finCalculator: IFinCalculator) : ViewModel() {
     private lateinit var balance: MutableLiveData<Balance>
@@ -23,12 +23,16 @@ class BalanceViewModel @Inject constructor(private val finTransactionRepository:
         return balance
     }
 
+    fun onDefaultCurrencyChanged() {
+        balance = calculateBalance(currencyRepository.getDefaultCurrency())
+    }
+
     fun setCurrentCurrency(currency: Currency) {
         balance = calculateBalance(currency)
     }
 
     private fun calculateBalance(currency: Currency): MutableLiveData<Balance> {
-        val transactions = finTransactionRepository.getAll()
+        val transactions = transactionRepository.getAll()
         balance.value = finCalculator.sum(transactions.value ?: listOf(), currency)
         return balance
     }

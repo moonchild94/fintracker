@@ -8,7 +8,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_extra)
+        setContentView(R.layout.activity_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         addSingleFragment(SettingsFragment.newInstance(), R.id.fragment_container)
     }

@@ -1,18 +1,26 @@
 <resources>
     <string name="app_name">FinTracker</string>
+
     <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">Settings</string>
     <string name="title_fragment_main">Главная</string>
     <string name="title_fragment_operation">Операции</string>
+    <string name="title_fragment_settings">Настройки</string>
+
     <string name="title_settings_menu_item">настройки</string>
-    <string name="title_about_menu_item">о приложении</string>
     <string name="title_back_menu_item">назад</string>
+
+    <string name="about">О приложении</string>
+    <string name="about_preference_key">about</string>
 
     <string name="currency_list_preference_key">currency_list</string>
     <string name="currency_settings">Настройки валюты</string>
     <string name="currency_default">Основная валюта</string>
     <string name="select_currency_default">Выберите основную валюту</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_icon_description">Иконка приложения</string>
+
+    <string name="balance_title">Ваш баланс</string>
+
+    <string name="author">© Дарья Калмыкова</string>
+    <string name="version">Версия 0.0.1</string>
 </resources>
