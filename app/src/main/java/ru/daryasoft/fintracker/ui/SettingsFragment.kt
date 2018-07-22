@@ -19,7 +19,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         preferenceManager.findPreference(getString(R.string.about_preference_key)).setOnPreferenceClickListener {
             AlertDialog.Builder(context)
-                    .setView(layoutInflater.inflate(R.layout.fragment_about, null))
+                    .setView(R.layout.fragment_about)
                     .create().show()
             true
         }
