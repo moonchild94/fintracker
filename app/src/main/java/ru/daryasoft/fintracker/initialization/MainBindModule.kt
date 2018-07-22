@@ -1,18 +1,22 @@
 package ru.daryasoft.fintracker.initialization
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import ru.daryasoft.fintracker.ui.MainActivity
 import ru.daryasoft.fintracker.ui.MainFragment
 import javax.inject.Singleton
 import dagger.Binds
+import dagger.multibindings.IntoMap
 import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
-import ru.daryasoft.fintracker.initialization.FinTrackerApplication
 import ru.daryasoft.fintracker.repository.FinTransactionRepository
 import ru.daryasoft.fintracker.repository.IFinTransactionRepository
-import ru.daryasoft.fintracker.repository.IRateRepository
-import ru.daryasoft.fintracker.repository.RateRepository
+import ru.daryasoft.fintracker.repository.ICurrencyRepository
+import ru.daryasoft.fintracker.repository.CurrencyRepository
+import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
+import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 
 /**
  * Dagger-модуль с поставщиками зависимостей.
@@ -35,5 +39,13 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun bindRateRepository(rateRepository: RateRepository): IRateRepository
+    fun bindRateRepository(rateRepository: CurrencyRepository): ICurrencyRepository
+
+    @Binds
+    fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BalanceViewModel::class)
+    fun postListViewModel(viewModel: BalanceViewModel): ViewModel
 }

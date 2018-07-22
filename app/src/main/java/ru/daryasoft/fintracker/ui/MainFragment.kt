@@ -1,6 +1,9 @@
 package ru.daryasoft.fintracker.ui
 
-import android.content.SharedPreferences
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,25 +11,19 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import ru.daryasoft.fintracker.R
-import ru.daryasoft.fintracker.calculator.IFinCalculator
+import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.repository.IFinTransactionRepository
+import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
+import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 class MainFragment : DaggerFragment() {
     @Inject
-    lateinit var finTransactionRepository: IFinTransactionRepository
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    @Inject
-    lateinit var finCalculator: IFinCalculator
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,26 +34,27 @@ class MainFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.title = getString(R.string.title_fragment_main)
 
-        val defaultCurrency = Currency.valueOf(sharedPreferences.getString(getString(R.string.currency_list_preference_key), Currency.RUB.toString()))
-        recalculateBalance(balance, defaultCurrency)
+        val balanceViewModel: BalanceViewModel = getViewModel(viewModelFactory)
 
-        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
-        currencySpinner.adapter = adapter
-        currencySpinner.setSelection(Currency.RUB.ordinal)
+        currencySpinner.adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
         currencySpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                recalculateBalance(balance, Currency.values()[position])
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                balanceViewModel.setCurrentCurrency(Currency.values()[position])
             }
         }
+
+        balanceViewModel.getBalance()
+                .observe(this@MainFragment, Observer<Balance> {
+                    balance.text = it?.sum.toString()
+                    currencySpinner.setSelection(it?.currency?.ordinal ?: Currency.RUB.ordinal)
+                })
     }
 
-    private fun recalculateBalance(balanceView: TextView, currency: Currency) {
-        val balance = finCalculator.sum(finTransactionRepository.getAll(), currency)
-        balanceView.text = "$balance"
-    }
+    private inline fun <reified T : ViewModel> getViewModel(viewModelFactory: ViewModelProvider.Factory): T =
+            ViewModelProviders.of(this, viewModelFactory)[T::class.java]
 
     companion object {
         @JvmStatic
