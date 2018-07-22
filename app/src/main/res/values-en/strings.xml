@@ -17,6 +17,7 @@
     <string name="select_currency_default">Select default currency</string>
 
     <string name="app_icon_description">Application icon</string>
+    <string name="transaction_type_description">Transaction type</string>
 
     <string name="balance_title">Your balance</string>
 

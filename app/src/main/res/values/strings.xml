@@ -17,6 +17,7 @@
     <string name="select_currency_default">Выберите основную валюту</string>
 
     <string name="app_icon_description">Иконка приложения</string>
+    <string name="transaction_type_description">Тип транзакции</string>
 
     <string name="balance_title">Ваш баланс</string>
 
