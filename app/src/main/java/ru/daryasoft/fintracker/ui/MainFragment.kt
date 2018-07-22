@@ -22,6 +22,9 @@ import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
+/**
+ * Главный фрагмент (содержащий баланс пользователя).
+ */
 class MainFragment : DaggerFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject

@@ -6,6 +6,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 
+/**
+ * Расширения для ui-классов.
+ */
 fun FragmentActivity.addSingleFragment(fragment: Fragment, id: Int) {
     supportFragmentManager.beginTransaction()
             .replace(id, fragment)

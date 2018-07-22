@@ -14,6 +14,9 @@ import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
 import javax.inject.Inject
 
+/**
+ * Фрагмент для списка транзакций.
+ */
 class TransactionsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

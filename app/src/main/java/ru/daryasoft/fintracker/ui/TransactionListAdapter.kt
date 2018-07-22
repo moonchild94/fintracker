@@ -11,6 +11,9 @@ import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
 
+/**
+ * Адаптер для отображения списка транзакций.
+ */
 class TransactionListAdapter(private val transactions: List<Transaction>) : RecyclerView.Adapter<TransactionListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -29,8 +32,8 @@ class TransactionListAdapter(private val transactions: List<Transaction>) : Recy
         return transactions.size
     }
 
-    private fun getIconForTransactionType(transactionType : TransactionType) : Int {
-        return when(transactionType) {
+    private fun getIconForTransactionType(transactionType: TransactionType): Int {
+        return when (transactionType) {
             TransactionType.OUTCOME -> R.drawable.ic_chevron_left_black_24dp
             TransactionType.INCOME -> R.drawable.ic_chevron_right_black_24dp
         }

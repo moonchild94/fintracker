@@ -7,6 +7,9 @@ import ru.daryasoft.fintracker.entity.TransactionType
 import ru.daryasoft.fintracker.repository.ICurrencyRepository
 import javax.inject.Inject
 
+/**
+ * Сервис для выполнения финансовых расчетов.
+ */
 class FinCalculator @Inject constructor(var currencyRepository: ICurrencyRepository): IFinCalculator {
     override fun sum(transactions: List<Transaction>, targetCurrency: Currency): Balance {
         var sum = 0.00

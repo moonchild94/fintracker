@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter
 import ru.daryasoft.fintracker.R
 import java.lang.IllegalArgumentException
 
+/**
+ *  Адаптер для переключения фрагментов на главной активити.
+ */
 class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {

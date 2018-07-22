@@ -9,6 +9,9 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Репозиторий для работы с финансовыми транзакциями.
+ */
 @Singleton
 class TransactionRepository @Inject constructor() : ITransactionRepository {
     override fun getAll(): LiveData<List<Transaction>> {

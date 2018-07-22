@@ -10,6 +10,9 @@ import ru.daryasoft.fintracker.repository.ICurrencyRepository
 import ru.daryasoft.fintracker.repository.ITransactionRepository
 import javax.inject.Inject
 
+/**
+ * ViewModel для баланса.
+ */
 class BalanceViewModel @Inject constructor(private val transactionRepository: ITransactionRepository,
                                            private val currencyRepository: ICurrencyRepository,
                                            private val finCalculator: IFinCalculator) : ViewModel() {

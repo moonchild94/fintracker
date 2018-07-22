@@ -4,6 +4,17 @@ import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.entity.Transaction
 
+/**
+ * Сервис для выполнения финансовых расчетов.
+ */
 interface IFinCalculator {
-    fun sum(transactions: List<Transaction>, targetCurrency: Currency) : Balance
+    /**
+     * Подсчитывает итоговую сумму для переданных транзакций.
+     *
+     * @param transactions список транзакций.
+     * @param targetCurrency валюта, в которой требуется подсчитать итоговую сумму.
+     *
+     * @return итоговая сумма.
+     */
+    fun sum(transactions: List<Transaction>, targetCurrency: Currency): Balance
 }

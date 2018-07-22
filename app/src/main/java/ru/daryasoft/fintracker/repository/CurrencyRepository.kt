@@ -8,6 +8,9 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Репозиторий для работы с валютами.
+ */
 @Singleton
 class CurrencyRepository @Inject constructor(private val sharedPreferences: SharedPreferences, private val context: Application)
     : ICurrencyRepository {
