@@ -27,13 +27,10 @@ import javax.inject.Inject
 /**
  * Главный фрагмент (содержащий баланс пользователя).
  */
-class MainFragment : DaggerFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class MainFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
 
     lateinit var balanceViewModel: BalanceViewModel
 
@@ -54,19 +51,11 @@ class MainFragment : DaggerFragment(), SharedPreferences.OnSharedPreferenceChang
             }
         }
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
         balanceViewModel.getBalance()
                 .observe(this@MainFragment, Observer<Balance> {
                     balance.text = it?.sum.toString()
                     currencySpinner.setSelection(it?.currency?.ordinal ?: Constants.DEFAULT_CURRENCY.ordinal)
                 })
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == getString(R.string.currency_list_preference_key)) {
-            balanceViewModel.onDefaultCurrencyChanged()
-        }
     }
 
     companion object {
