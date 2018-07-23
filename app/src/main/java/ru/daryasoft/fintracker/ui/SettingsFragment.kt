@@ -26,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val defaultCurrencyPreference = preferenceManager.findPreference(getString(R.string.currency_list_preference_key))
         if (defaultCurrencyPreference is ListPreference) {
-            defaultCurrencyPreference.summary = defaultCurrencyPreference.entry ?: Constants.DEFAULT_CURRENCY.toString()
+            defaultCurrencyPreference.summary = defaultCurrencyPreference.entry
         }
         defaultCurrencyPreference
                 .setOnPreferenceChangeListener { preference, newValue ->

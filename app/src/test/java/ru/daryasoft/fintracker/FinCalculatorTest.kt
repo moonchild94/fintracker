@@ -1,7 +1,6 @@
 package ru.daryasoft.fintracker
 
 import com.nhaarman.mockito_kotlin.any
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
@@ -12,7 +11,7 @@ import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
-import ru.daryasoft.fintracker.repository.ICurrencyRepository
+import ru.daryasoft.fintracker.repository.CurrencyRepository
 import java.util.*
 
 class FinCalculatorTest {
@@ -20,7 +19,7 @@ class FinCalculatorTest {
     var mockitoRule = MockitoJUnit.rule()
 
     @Mock
-    private lateinit var currencyRepository: ICurrencyRepository
+    private lateinit var currencyRepository: CurrencyRepository
 
     @InjectMocks
     private lateinit var finCalculator: FinCalculator

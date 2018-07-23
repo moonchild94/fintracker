@@ -8,7 +8,8 @@
             android:entries="@array/currency_list_preference"
             android:entryValues="@array/currency_values_list_preference"
             android:key="@string/currency_list_preference_key"
-            android:title="@string/currency_default" />
+            android:title="@string/currency_default"
+            android:defaultValue="@string/rub"/>
 
     </PreferenceCategory>
 

@@ -22,4 +22,8 @@
 
     <string name="author">© Дарья Калмыкова</string>
     <string name="version">Версия 0.0.1</string>
+
+    <string name="usd">USD</string>
+    <string name="rub">RUB</string>
+
 </resources>

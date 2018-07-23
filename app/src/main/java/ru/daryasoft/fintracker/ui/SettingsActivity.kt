@@ -13,7 +13,10 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        addSingleFragment(SettingsFragment.newInstance(), R.id.fragment_container)
+
+        if (savedInstanceState == null) {
+            addSingleFragment(SettingsFragment.newInstance(), R.id.fragment_container)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

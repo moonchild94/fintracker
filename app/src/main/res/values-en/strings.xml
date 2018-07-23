@@ -22,4 +22,7 @@
 
     <string name="author">© Darya Kalmykova</string>
     <string name="version">Version 0.0.1</string>
+
+    <string name="usd">USD</string>
+    <string name="rub">RUB</string>
 </resources>
