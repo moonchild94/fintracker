@@ -1,5 +1,6 @@
 package ru.daryasoft.fintracker.repository
 
+import android.arch.lifecycle.LiveData
 import ru.daryasoft.fintracker.entity.Currency
 import java.util.*
 
@@ -12,7 +13,7 @@ interface ICurrencyRepository {
      *
      * @return основная валюта.
      */
-    fun getDefaultCurrency(): Currency
+    fun getDefaultCurrency(): LiveData<Currency>
 
     /**
      * Получить курс одной валюты относительно другой.

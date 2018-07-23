@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import ru.daryasoft.fintracker.R
-import java.lang.IllegalArgumentException
 
 /**
  *  Адаптер для переключения фрагментов на главной активити.
@@ -14,9 +13,8 @@ class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> MainFragment.newInstance()
             1 -> TransactionsFragment.newInstance()
-            else -> throw IllegalArgumentException()
+            else -> MainFragment.newInstance()
         }
     }
 
@@ -26,9 +24,8 @@ class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0 -> context.getString(R.string.title_fragment_main)
             1 -> context.getString(R.string.title_fragment_operation)
-            else -> throw IllegalArgumentException()
+            else -> context.getString(R.string.title_fragment_main)
         }
     }
 }
