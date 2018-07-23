@@ -16,8 +16,13 @@ import javax.inject.Singleton
  */
 @Singleton
 class CurrencyRepositoryImpl @Inject constructor(private val sharedPreferences: SharedPreferences, private val context: Application)
-    : CurrencyRepository {
+    : CurrencyRepository, SharedPreferences.OnSharedPreferenceChangeListener {
+
     private val currency = MutableLiveData<Currency>()
+
+    init {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
 
     override fun getDefaultCurrency(): LiveData<Currency> {
         val defaultCurrencyPreferenceKey = context.getString(R.string.currency_list_preference_key)
@@ -32,6 +37,12 @@ class CurrencyRepositoryImpl @Inject constructor(private val sharedPreferences: 
         return when (currencyFrom) {
             Currency.RUB -> 0.02
             Currency.USD -> 50.00
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == context.getString(R.string.currency_list_preference_key)) {
+            getDefaultCurrency()
         }
     }
 }

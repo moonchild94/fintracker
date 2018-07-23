@@ -17,27 +17,31 @@ import javax.inject.Inject
 class BalanceViewModel @Inject constructor(private val transactionRepository: TransactionRepository,
                                            private val currencyRepository: CurrencyRepository,
                                            private val finCalculator: IFinCalculator) : ViewModel() {
-    private lateinit var balance: MutableLiveData<Balance>
 
-    fun getBalance(): LiveData<Balance> {
-        if (!::balance.isInitialized) {
-            balance = MutableLiveData()
-            balance = calculateBalance(currencyRepository.getDefaultCurrency().value ?: Constants.DEFAULT_CURRENCY)
-        }
-        return balance
+    private lateinit var balance: MutableLiveData<Balance>
+    private lateinit var defaultCurrency: LiveData<Currency>
+
+    init {
+        getDefaultCurrency().observeForever { setCurrentCurrency(it ?: Constants.DEFAULT_CURRENCY) }
     }
 
-    fun onDefaultCurrencyChanged() {
-        balance = calculateBalance(currencyRepository.getDefaultCurrency().value ?: Constants.DEFAULT_CURRENCY)
+    fun getBalance(): LiveData<Balance> {
+        return balance
     }
 
     fun setCurrentCurrency(currency: Currency) {
-        balance = calculateBalance(currency)
-    }
-
-    private fun calculateBalance(currency: Currency): MutableLiveData<Balance> {
+        if (!::balance.isInitialized) {
+            balance = MutableLiveData()
+        }
         val transactions = transactionRepository.getAll()
         balance.value = finCalculator.sum(transactions.value ?: listOf(), currency)
-        return balance
+    }
+
+    private fun getDefaultCurrency(): LiveData<Currency> {
+        if (!::defaultCurrency.isInitialized) {
+            defaultCurrency = MutableLiveData()
+            defaultCurrency = currencyRepository.getDefaultCurrency()
+        }
+        return defaultCurrency
     }
 }
