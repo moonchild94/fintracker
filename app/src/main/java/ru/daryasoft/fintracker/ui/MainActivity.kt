@@ -26,7 +26,7 @@ class MainActivity : DaggerAppCompatActivity() {
                 title = when (tab?.position) {
                     0 -> getString(R.string.title_fragment_main)
                     1 -> getString(R.string.title_fragment_operation)
-                    else -> ""
+                    else -> throw IllegalArgumentException()
                 }
             }
 
