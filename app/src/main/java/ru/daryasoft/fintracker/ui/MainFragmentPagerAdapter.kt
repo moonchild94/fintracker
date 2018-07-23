@@ -13,8 +13,9 @@ class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
+            0 -> MainFragment.newInstance()
             1 -> TransactionsFragment.newInstance()
-            else -> MainFragment.newInstance()
+            else -> throw IllegalArgumentException()
         }
     }
 
@@ -24,8 +25,9 @@ class MainFragmentPagerAdapter(private val context: Context, fm: FragmentManager
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
+            0 -> context.getString(R.string.title_fragment_main)
             1 -> context.getString(R.string.title_fragment_operation)
-            else -> context.getString(R.string.title_fragment_main)
+            else -> throw IllegalArgumentException()
         }
     }
 }
