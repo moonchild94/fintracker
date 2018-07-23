@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import ru.daryasoft.fintracker.R
-import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.main.Constants
 
 /**
  * Фрагмент для настроек приложения.
@@ -26,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val defaultCurrencyPreference = preferenceManager.findPreference(getString(R.string.currency_list_preference_key))
         if (defaultCurrencyPreference is ListPreference) {
-            defaultCurrencyPreference.summary = defaultCurrencyPreference.entry ?: Currency.RUB.toString()
+            defaultCurrencyPreference.summary = defaultCurrencyPreference.entry ?: Constants.DEFAULT_CURRENCY.toString()
         }
         defaultCurrencyPreference
                 .setOnPreferenceChangeListener { preference, newValue ->

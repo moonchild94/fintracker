@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.main.Constants
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,7 +17,7 @@ class CurrencyRepository @Inject constructor(private val sharedPreferences: Shar
     : ICurrencyRepository {
     override fun getDefaultCurrency() : Currency {
         val defaultCurrencyPreferenceKey = context.getString(R.string.currency_list_preference_key)
-        return Currency.valueOf(sharedPreferences.getString(defaultCurrencyPreferenceKey, Currency.RUB.toString()))
+        return Currency.valueOf(sharedPreferences.getString(defaultCurrencyPreferenceKey, Constants.DEFAULT_CURRENCY.toString()))
     }
 
     override fun getRate(currencyFrom: Currency, currencyTo: Currency, date: Date): Double {

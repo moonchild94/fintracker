@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.main.Constants
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -57,7 +59,7 @@ class MainFragment : DaggerFragment(), SharedPreferences.OnSharedPreferenceChang
         balanceViewModel.getBalance()
                 .observe(this@MainFragment, Observer<Balance> {
                     balance.text = it?.sum.toString()
-                    currencySpinner.setSelection(it?.currency?.ordinal ?: Currency.RUB.ordinal)
+                    currencySpinner.setSelection(it?.currency?.ordinal ?: Constants.DEFAULT_CURRENCY.ordinal)
                 })
     }
 
