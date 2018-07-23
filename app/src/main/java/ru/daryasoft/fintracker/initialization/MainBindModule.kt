@@ -11,10 +11,10 @@ import dagger.Binds
 import dagger.multibindings.IntoMap
 import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
+import ru.daryasoft.fintracker.repository.TransactionRepositoryImpl
 import ru.daryasoft.fintracker.repository.TransactionRepository
-import ru.daryasoft.fintracker.repository.ITransactionRepository
-import ru.daryasoft.fintracker.repository.ICurrencyRepository
 import ru.daryasoft.fintracker.repository.CurrencyRepository
+import ru.daryasoft.fintracker.repository.CurrencyRepositoryImpl
 import ru.daryasoft.fintracker.ui.TransactionsFragment
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
@@ -40,11 +40,11 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun bindTransactionRepository(TransactionRepository: TransactionRepository): ITransactionRepository
+    fun bindTransactionRepository(TransactionRepository: TransactionRepositoryImpl): TransactionRepository
 
     @Binds
     @Singleton
-    fun bindRateRepository(rateRepository: CurrencyRepository): ICurrencyRepository
+    fun bindRateRepository(rateRepository: CurrencyRepositoryImpl): CurrencyRepository
 
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

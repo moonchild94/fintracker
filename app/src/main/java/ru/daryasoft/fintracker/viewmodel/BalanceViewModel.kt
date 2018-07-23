@@ -7,15 +7,15 @@ import ru.daryasoft.fintracker.calculator.IFinCalculator
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.main.Constants
-import ru.daryasoft.fintracker.repository.ICurrencyRepository
-import ru.daryasoft.fintracker.repository.ITransactionRepository
+import ru.daryasoft.fintracker.repository.CurrencyRepository
+import ru.daryasoft.fintracker.repository.TransactionRepository
 import javax.inject.Inject
 
 /**
  * ViewModel для баланса.
  */
-class BalanceViewModel @Inject constructor(private val transactionRepository: ITransactionRepository,
-                                           private val currencyRepository: ICurrencyRepository,
+class BalanceViewModel @Inject constructor(private val transactionRepository: TransactionRepository,
+                                           private val currencyRepository: CurrencyRepository,
                                            private val finCalculator: IFinCalculator) : ViewModel() {
     private lateinit var balance: MutableLiveData<Balance>
 
