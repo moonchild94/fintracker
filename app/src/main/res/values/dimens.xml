@@ -5,6 +5,7 @@
 
     <dimen name="transactionColumnWidth">0dp</dimen>
     <dimen name="transactionTextSize">16sp</dimen>
+    <dimen name="transactionsListPadding">5dp</dimen>
 
     <dimen name="iconSize">200dp</dimen>
     <dimen name="aboutTextSize">18sp</dimen>
