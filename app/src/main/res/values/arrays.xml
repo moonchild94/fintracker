@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="currency_list_preference">
+        <item>USD</item>
+        <item>RUB</item>
+    </array>
+
+    <array name="currency_values_list_preference">
+        <item>USD</item>
+        <item>RUB</item>
+    </array>
+</resources>

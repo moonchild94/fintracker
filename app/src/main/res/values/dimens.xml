@@ -1,0 +1,11 @@
+<resources>
+    <dimen name="balanceTitleTextSize">30sp</dimen>
+    <dimen name="balanceTextSize">30sp</dimen>
+    <dimen name="balanceMargin">5dp</dimen>
+
+    <dimen name="transactionColumnWidth">0dp</dimen>
+    <dimen name="transactionTextSize">16sp</dimen>
+
+    <dimen name="iconSize">200dp</dimen>
+    <dimen name="aboutTextSize">18sp</dimen>
+</resources>
