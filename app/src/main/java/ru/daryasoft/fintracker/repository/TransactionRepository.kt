@@ -14,8 +14,9 @@ import javax.inject.Singleton
  */
 @Singleton
 class TransactionRepository @Inject constructor() : ITransactionRepository {
+    private val transactions = MutableLiveData<List<Transaction>>()
+
     override fun getAll(): LiveData<List<Transaction>> {
-        val transactions = MutableLiveData<List<Transaction>>()
         transactions.value = listOf(
                 Transaction(Currency.RUB, 10000.00, TransactionType.INCOME, Date()),
                 Transaction(Currency.RUB, 1000.00, TransactionType.OUTCOME, Date()),

@@ -1,6 +1,8 @@
 package ru.daryasoft.fintracker.repository
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.content.SharedPreferences
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Currency
@@ -15,9 +17,12 @@ import javax.inject.Singleton
 @Singleton
 class CurrencyRepository @Inject constructor(private val sharedPreferences: SharedPreferences, private val context: Application)
     : ICurrencyRepository {
-    override fun getDefaultCurrency() : Currency {
+    private val currency = MutableLiveData<Currency>()
+
+    override fun getDefaultCurrency(): LiveData<Currency> {
         val defaultCurrencyPreferenceKey = context.getString(R.string.currency_list_preference_key)
-        return Currency.valueOf(sharedPreferences.getString(defaultCurrencyPreferenceKey, Constants.DEFAULT_CURRENCY.toString()))
+        currency.value = Currency.valueOf(sharedPreferences.getString(defaultCurrencyPreferenceKey, Constants.DEFAULT_CURRENCY.toString()))
+        return currency
     }
 
     override fun getRate(currencyFrom: Currency, currencyTo: Currency, date: Date): Double {

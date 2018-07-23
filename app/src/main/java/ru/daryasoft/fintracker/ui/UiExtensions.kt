@@ -12,7 +12,7 @@ import android.support.v4.app.FragmentActivity
 fun FragmentActivity.addSingleFragment(fragment: Fragment, id: Int) {
     supportFragmentManager.beginTransaction()
             .replace(id, fragment)
-            .commit()
+            .commitNow()
 }
 
 inline fun <reified T : ViewModel> Fragment.getViewModel(viewModelFactory: ViewModelProvider.Factory): T =
