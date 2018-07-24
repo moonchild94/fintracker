@@ -14,7 +14,7 @@ import ru.daryasoft.fintracker.entity.TransactionType
 /**
  * Адаптер для отображения списка транзакций.
  */
-class TransactionListAdapter(private val transactions: List<Transaction>) : RecyclerView.Adapter<TransactionListAdapter.ViewHolder>() {
+class TransactionListAdapter(private var transactions: List<Transaction>) : RecyclerView.Adapter<TransactionListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.date.text = getDateFormat(holder.date.context).format(transactions[position].date)
@@ -30,6 +30,11 @@ class TransactionListAdapter(private val transactions: List<Transaction>) : Recy
 
     override fun getItemCount(): Int {
         return transactions.size
+    }
+
+    fun setData(changedTransactions: List<Transaction>) {
+        transactions = changedTransactions
+        notifyDataSetChanged()
     }
 
     private fun getIconForTransactionType(transactionType: TransactionType): Int {
