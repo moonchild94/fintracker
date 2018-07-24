@@ -21,6 +21,13 @@ class TransactionsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    private val viewModel: TransactionsViewModel by lazy { getViewModel<TransactionsViewModel>(viewModelFactory) }
+    private val observer: Observer<List<Transaction>> by lazy {
+        Observer<List<Transaction>> { list -> transactionListAdapter.setData(list ?: listOf()) }
+    }
+
+    private val transactionListAdapter: TransactionListAdapter = TransactionListAdapter(listOf())
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_operation, container, false)
@@ -28,17 +35,18 @@ class TransactionsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         transaction_list.layoutManager = LinearLayoutManager(context)
+        transaction_list.adapter = transactionListAdapter
+    }
 
-        getViewModel<TransactionsViewModel>(viewModelFactory)
-                .getTransactions().observe(this,
-                        Observer<List<Transaction>> { list ->
-                            if (transaction_list.adapter == null) {
-                                transaction_list.adapter = TransactionListAdapter(list ?: listOf())
-                            }
-                        }
-                )
+    override fun onStart() {
+        super.onStart()
+        viewModel.getTransactions().observe(this, observer)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.getTransactions().removeObserver(observer)
     }
 
     companion object {
