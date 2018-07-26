@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.main
+package ru.daryasoft.fintracker
 
 import ru.daryasoft.fintracker.entity.Currency
 

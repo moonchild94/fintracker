@@ -10,12 +10,7 @@ import javax.inject.Inject
  * ViewModel для списка транзакций.
  */
 class TransactionsViewModel @Inject constructor(private val transactionRepository: TransactionRepository) : ViewModel() {
-    private lateinit var transactions: LiveData<List<Transaction>>
-
-    fun getTransactions(): LiveData<List<Transaction>> {
-        if (!::transactions.isInitialized) {
-            transactions = transactionRepository.getAll()
-        }
-        return transactions
+    val transactions: LiveData<List<Transaction>> by lazy {
+        transactionRepository.getAll()
     }
 }

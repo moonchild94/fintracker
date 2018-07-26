@@ -41,12 +41,12 @@ class TransactionsFragment : DaggerFragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getTransactions().observe(this, observer)
+        viewModel.transactions.observe(this, observer)
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel.getTransactions().removeObserver(observer)
+        viewModel.transactions.removeObserver(observer)
     }
 
     companion object {
