@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.SharedPreferences
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.main.Constants
+import ru.daryasoft.fintracker.Constants
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

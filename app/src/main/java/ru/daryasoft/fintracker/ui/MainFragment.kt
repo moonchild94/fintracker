@@ -11,10 +11,10 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import ru.daryasoft.fintracker.Constants
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.main.Constants
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import javax.inject.Inject
 
@@ -41,15 +41,7 @@ class MainFragment : DaggerFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        currencySpinner.adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
-        currencySpinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onNothingSelected(adapter: AdapterView<*>) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                balanceViewModel.setCurrentCurrency(Currency.values()[position])
-            }
-        }
+        initSpinner()
     }
 
     override fun onStart() {
@@ -60,6 +52,18 @@ class MainFragment : DaggerFragment() {
     override fun onStop() {
         super.onStop()
         balanceViewModel.getBalance().removeObserver(observer)
+    }
+
+    private fun initSpinner() {
+        currencySpinner.adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
+        currencySpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(adapter: AdapterView<*>) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                balanceViewModel.setCurrentCurrency(Currency.values()[position])
+            }
+        }
     }
 
     companion object {

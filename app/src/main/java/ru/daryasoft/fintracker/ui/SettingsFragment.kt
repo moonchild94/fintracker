@@ -5,25 +5,34 @@ import android.os.Bundle
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import ru.daryasoft.fintracker.R
-import ru.daryasoft.fintracker.main.Constants
 
 /**
  * Фрагмент для настроек приложения.
  */
+private const val IS_DIALOG_SHOWN_KEY = "isDialogShown"
+
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    private var isDialogShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        
         activity?.title = getString(R.string.title_fragment_settings)
+        initCurrencySettings()
+        initAbout(savedInstanceState)
+    }
 
-        preferenceManager.findPreference(getString(R.string.about_preference_key)).setOnPreferenceClickListener {
-            AlertDialog.Builder(context)
-                    .setView(R.layout.fragment_about)
-                    .create().show()
-            true
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(IS_DIALOG_SHOWN_KEY, isDialogShown)
+    }
 
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.settings, rootKey)
+    }
+
+    private fun initCurrencySettings() {
         val defaultCurrencyPreference = preferenceManager.findPreference(getString(R.string.currency_list_preference_key))
         if (defaultCurrencyPreference is ListPreference) {
             defaultCurrencyPreference.summary = defaultCurrencyPreference.entry
@@ -35,8 +44,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.settings, rootKey)
+    private fun initAbout(savedInstanceState: Bundle?) {
+        isDialogShown = savedInstanceState?.getBoolean(IS_DIALOG_SHOWN_KEY) ?: false
+        if (isDialogShown) {
+            showDialog()
+        }
+
+        preferenceManager.findPreference(getString(R.string.about_preference_key)).setOnPreferenceClickListener {
+            showDialog()
+            true
+        }
+    }
+
+    private fun showDialog() {
+        val dialog = AlertDialog.Builder(context)
+                .setView(R.layout.fragment_about)
+                .create()
+        dialog.setOnDismissListener { isDialogShown = false }
+        dialog.setOnShowListener { isDialogShown = true }
+        dialog.show()
     }
 
     companion object {
