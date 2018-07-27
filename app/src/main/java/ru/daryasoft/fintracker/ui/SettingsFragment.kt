@@ -2,7 +2,6 @@ package ru.daryasoft.fintracker.ui
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceFragmentCompat
 import ru.daryasoft.fintracker.R
 
@@ -17,9 +16,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         activity?.title = getString(R.string.title_fragment_settings)
-        initCurrencySettings()
         initAbout(savedInstanceState)
     }
 
@@ -30,18 +28,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
-    }
-
-    private fun initCurrencySettings() {
-        val defaultCurrencyPreference = preferenceManager.findPreference(getString(R.string.currency_list_preference_key))
-        if (defaultCurrencyPreference is ListPreference) {
-            defaultCurrencyPreference.summary = defaultCurrencyPreference.entry
-        }
-        defaultCurrencyPreference
-                .setOnPreferenceChangeListener { preference, newValue ->
-                    preference.summary = newValue.toString()
-                    true
-                }
     }
 
     private fun initAbout(savedInstanceState: Bundle?) {

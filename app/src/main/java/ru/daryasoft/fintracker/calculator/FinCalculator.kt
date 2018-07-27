@@ -15,7 +15,7 @@ class FinCalculator @Inject constructor(var currencyRepository: CurrencyReposito
         var sum = 0.00
 
         for (transaction in transactions) {
-            val rate = currencyRepository.getRate(transaction.currency, targetCurrency, transaction.date)
+            val rate = currencyRepository.getRate(transaction.account.currency, targetCurrency, transaction.date)
             val sumWithRate = transaction.sum * rate
             sum += (if (transaction.type == TransactionType.INCOME) sumWithRate else -sumWithRate)
         }

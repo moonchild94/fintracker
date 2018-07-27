@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.ui
+package ru.daryasoft.fintracker.ui.transaction
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -11,6 +11,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.ui.getViewModel
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
 import javax.inject.Inject
 
@@ -26,7 +27,7 @@ class TransactionsFragment : DaggerFragment() {
         Observer<List<Transaction>> { list -> transactionListAdapter.setData(list ?: listOf()) }
     }
 
-    private val transactionListAdapter = TransactionListAdapter(listOf())
+    private val transactionListAdapter = TransactionListAdapter(listOf()) { position -> onDeleteTransaction(position) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,8 +36,11 @@ class TransactionsFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         transaction_list.layoutManager = LinearLayoutManager(context)
         transaction_list.adapter = transactionListAdapter
+
+        transaction_list.setOnClickListener { onAddTransaction() }
     }
 
     override fun onStart() {
@@ -47,6 +51,16 @@ class TransactionsFragment : DaggerFragment() {
     override fun onStop() {
         viewModel.transactions.removeObserver(observer)
         super.onStop()
+    }
+
+    private fun onAddTransaction() {
+        OnAddTransactionDialogFragment.newInstance { transaction -> viewModel.onAddTransaction(transaction) }
+                .show(fragmentManager, "OnAddTransactionDialogFragment")
+    }
+
+    private fun onDeleteTransaction(position: Int) {
+        OnDeleteTransactionDialogFragment.newInstance { viewModel.onDeleteTransaction(position) }
+                .show(fragmentManager, "OnDeleteTransactionDialogFragment")
     }
 
     companion object {

@@ -13,7 +13,7 @@ import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
 import ru.daryasoft.fintracker.repository.*
 import ru.daryasoft.fintracker.ui.account.AccountsFragment
-import ru.daryasoft.fintracker.ui.TransactionsFragment
+import ru.daryasoft.fintracker.ui.transaction.TransactionsFragment
 import ru.daryasoft.fintracker.viewmodel.AccountsViewModel
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel

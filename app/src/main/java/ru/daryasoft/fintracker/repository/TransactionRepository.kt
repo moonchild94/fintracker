@@ -11,4 +11,8 @@ interface TransactionRepository {
      * Получить все финансовые транзакции.
      */
     fun getAll(): LiveData<List<Transaction>>
+
+    fun add(transaction: Transaction)
+
+    fun delete(transaction: Transaction)
 }
