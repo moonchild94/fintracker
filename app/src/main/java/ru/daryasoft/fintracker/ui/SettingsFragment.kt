@@ -58,7 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun showDialog() {
         val dialog = AlertDialog.Builder(context)
-                .setView(R.layout.fragment_about)
+                .setView(R.layout.dialog_about)
                 .create()
         dialog.setOnDismissListener { isDialogShown = false }
         dialog.setOnShowListener { isDialogShown = true }

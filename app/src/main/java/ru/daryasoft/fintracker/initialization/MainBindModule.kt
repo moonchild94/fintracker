@@ -5,17 +5,16 @@ import android.arch.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import ru.daryasoft.fintracker.ui.MainActivity
-import ru.daryasoft.fintracker.ui.MainFragment
+import ru.daryasoft.fintracker.ui.BalanceFragment
 import javax.inject.Singleton
 import dagger.Binds
 import dagger.multibindings.IntoMap
 import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
-import ru.daryasoft.fintracker.repository.TransactionRepositoryImpl
-import ru.daryasoft.fintracker.repository.TransactionRepository
-import ru.daryasoft.fintracker.repository.CurrencyRepository
-import ru.daryasoft.fintracker.repository.CurrencyRepositoryImpl
+import ru.daryasoft.fintracker.repository.*
+import ru.daryasoft.fintracker.ui.account.AccountsFragment
 import ru.daryasoft.fintracker.ui.TransactionsFragment
+import ru.daryasoft.fintracker.viewmodel.AccountsViewModel
 import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
 import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
@@ -29,10 +28,13 @@ interface MainBindModule {
     fun contributeMainActivityInjector(): MainActivity
 
     @ContributesAndroidInjector
-    fun contributeMainFragmentInjector(): MainFragment
+    fun contributeMainFragmentInjector(): BalanceFragment
 
     @ContributesAndroidInjector
     fun contributeTransactionsFragmentInjector(): TransactionsFragment
+
+    @ContributesAndroidInjector
+    fun contributeAccountsFragmentInjector(): AccountsFragment
 
     @Binds
     @Singleton
@@ -40,11 +42,19 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun bindTransactionRepository(TransactionRepository: TransactionRepositoryImpl): TransactionRepository
+    fun bindTransactionRepository(transactionRepository: TransactionRepositoryImpl): TransactionRepository
+
+    @Binds
+    @Singleton
+    fun bindAccountRepository(accountRepository: AccountRepositoryImpl): AccountRepository
 
     @Binds
     @Singleton
     fun bindRateRepository(rateRepository: CurrencyRepositoryImpl): CurrencyRepository
+
+    @Binds
+    @Singleton
+    fun bindCategoryRepository(categoryRepository: CategoryRepositoryImpl): CategoryRepository
 
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
@@ -58,4 +68,9 @@ interface MainBindModule {
     @IntoMap
     @ViewModelKey(TransactionsViewModel::class)
     fun postTransactionsViewModel(viewModel: TransactionsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AccountsViewModel::class)
+    fun postAccountsViewModel(viewModel: AccountsViewModel): ViewModel
 }

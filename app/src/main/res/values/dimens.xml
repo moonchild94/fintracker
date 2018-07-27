@@ -10,4 +10,8 @@
     <dimen name="iconSize">200dp</dimen>
     <dimen name="aboutTextSize">18sp</dimen>
     <dimen name="aboutDialogPadding">5dp</dimen>
+
+    <dimen name="accountPadding">5dp</dimen>
+    <dimen name="accountMargin">3dp</dimen>
+    <dimen name="accountNameTextSize">20sp</dimen>
 </resources>

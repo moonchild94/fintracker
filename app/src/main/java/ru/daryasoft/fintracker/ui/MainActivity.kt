@@ -1,56 +1,43 @@
 package ru.daryasoft.fintracker.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.view.Menu
-import android.view.MenuItem
+import android.support.v7.app.ActionBarDrawerToggle
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.ui.account.AccountsFragment
 
 class MainActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initTabLayout()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        initSideMenu()
+        if (savedInstanceState == null) {
+            replaceFragment(MainFragment.newInstance(), R.id.main_fragment_container)
         }
     }
 
-    private fun initTabLayout() {
-        val adapter = MainFragmentPagerAdapter(this, supportFragmentManager)
-        view_pager.adapter = adapter
+    private fun initSideMenu() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        val toggle = ActionBarDrawerToggle(this, drawer_layout, R.string.title_fragment_balance, R.string.title_fragment_operation)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
 
-        sliding_tabs.setupWithViewPager(view_pager)
-        sliding_tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                title = when (tab?.position) {
-                    0 -> getString(R.string.title_fragment_main)
-                    1 -> getString(R.string.title_fragment_operation)
-                    else -> throw IllegalArgumentException()
-                }
+        nav_view.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
+            drawer_layout.closeDrawers()
+
+            when (menuItem.itemId) {
+                R.id.main_page -> replaceFragment(MainFragment.newInstance(), R.id.main_fragment_container)
+                R.id.accounts -> replaceFragment(AccountsFragment.newInstance(), R.id.main_fragment_container)
+                R.id.categories -> replaceFragment(SettingsFragment.newInstance(), R.id.main_fragment_container)
+                R.id.settings -> replaceFragment(SettingsFragment.newInstance(), R.id.main_fragment_container)
+                else -> throw IllegalArgumentException()
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-        })
+            true
+        }
     }
 }

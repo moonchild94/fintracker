@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_operation.*
+import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
@@ -26,11 +26,11 @@ class TransactionsFragment : DaggerFragment() {
         Observer<List<Transaction>> { list -> transactionListAdapter.setData(list ?: listOf()) }
     }
 
-    private val transactionListAdapter: TransactionListAdapter = TransactionListAdapter(listOf())
+    private val transactionListAdapter = TransactionListAdapter(listOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_operation, container, false)
+        return inflater.inflate(R.layout.fragment_transactions, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +45,8 @@ class TransactionsFragment : DaggerFragment() {
     }
 
     override fun onStop() {
-        super.onStop()
         viewModel.transactions.removeObserver(observer)
+        super.onStop()
     }
 
     companion object {

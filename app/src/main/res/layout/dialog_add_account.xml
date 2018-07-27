@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:text="Название"
+        android:id="@+id/account_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="@id/account_name"
+        app:layout_constraintBottom_toBottomOf="@id/account_name"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp" />
+
+    <EditText
+        android:id="@+id/account_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintLeft_toRightOf="@id/account_name_title"
+        android:inputType="text" />
+
+    <TextView
+        android:text="Начальный баланс"
+        android:textSize="20sp"
+        android:id="@+id/account_start_amount_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/account_name" />
+
+    <EditText
+        android:id="@+id/account_start_amount"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:inputType="numberDecimal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/account_start_amount_title" />
+
+    <Spinner
+        android:id="@+id/account_currency_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/account_start_amount_title"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
