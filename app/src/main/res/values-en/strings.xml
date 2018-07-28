@@ -4,6 +4,7 @@
     <string name="title_fragment_balance">Main</string>
     <string name="title_fragment_operation">Transactions</string>
     <string name="title_fragment_settings">Settings</string>
+    <string name="title_fragment_add_transaction">Operation adding</string>
 
     <string name="title_main_page_menu_item">Main</string>
     <string name="title_accounts_menu_item">Accounts</string>

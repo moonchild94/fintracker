@@ -30,13 +30,17 @@ class TransactionRepositoryImpl @Inject constructor() : TransactionRepository {
             Category("Еда", TransactionType.OUTCOME,
                     "ic_food"))
 
-    override fun getAll(): LiveData<List<Transaction>> {
+    init {
         transactions.value = listOf(
                 Transaction(accounts[0], 10000.00, TransactionType.INCOME, Date(), categories[0]),
                 Transaction(accounts[1], 1000.00, TransactionType.OUTCOME, Date(), categories[1]),
                 Transaction(accounts[2], 1000.00, TransactionType.OUTCOME, Date(), categories[2]),
                 Transaction(accounts[0], 1000.00, TransactionType.INCOME, Date(), categories[3]),
                 Transaction(accounts[1], 1000.00, TransactionType.OUTCOME, Date(), categories[0]))
+    }
+
+    override fun getAll(): LiveData<List<Transaction>> {
+
         return transactions
     }
 

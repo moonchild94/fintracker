@@ -13,11 +13,9 @@ import ru.daryasoft.fintracker.calculator.FinCalculator
 import ru.daryasoft.fintracker.calculator.IFinCalculator
 import ru.daryasoft.fintracker.repository.*
 import ru.daryasoft.fintracker.ui.account.AccountsFragment
+import ru.daryasoft.fintracker.ui.transaction.AddTransactionFragment
 import ru.daryasoft.fintracker.ui.transaction.TransactionsFragment
-import ru.daryasoft.fintracker.viewmodel.AccountsViewModel
-import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
-import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
-import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
+import ru.daryasoft.fintracker.viewmodel.*
 
 /**
  * Dagger-модуль с поставщиками зависимостей.
@@ -35,6 +33,9 @@ interface MainBindModule {
 
     @ContributesAndroidInjector
     fun contributeAccountsFragmentInjector(): AccountsFragment
+
+    @ContributesAndroidInjector
+    fun contributeAddTransactionFragmentInjector(): AddTransactionFragment
 
     @Binds
     @Singleton
@@ -73,4 +74,9 @@ interface MainBindModule {
     @IntoMap
     @ViewModelKey(AccountsViewModel::class)
     fun postAccountsViewModel(viewModel: AccountsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CategoriesViewModel::class)
+    fun postCategoriesViewModel(viewModel: CategoriesViewModel): ViewModel
 }

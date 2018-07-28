@@ -16,13 +16,19 @@ class CategoryRepositoryImpl @Inject constructor(): CategoryRepository {
     override fun getAll(): LiveData<List<Category>> {
         categories.value = mutableListOf(
                 Category("Зарплата", TransactionType.INCOME,
-                        "android.resource://ru.daryasoft.fintracker/drawable/ic_salary"),
+                        "ic_salary"),
                 Category("Сбережения", TransactionType.INCOME,
-                        "android.resource://ru.daryasoft.fintracker/drawable/ic_savings"),
+                        "ic_saving"),
                 Category("Транспорт", TransactionType.OUTCOME,
-                        "android.resource://ru.daryasoft.fintracker/drawable/ic_transport"),
+                        "ic_transport"),
                 Category("Еда", TransactionType.OUTCOME,
-                        "android.resource://ru.daryasoft.fintracker/drawable/ic_food"))
+                        "ic_food"))
         return categories
+    }
+
+    override fun findByTransactionType(transactionType: TransactionType): LiveData<List<Category>> {
+        val categoriesByType = MutableLiveData<List<Category>>()
+        categoriesByType.value = getAll().value?.filter { it.transactionType == transactionType }
+        return categoriesByType
     }
 }

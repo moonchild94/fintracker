@@ -9,9 +9,9 @@ import android.support.v4.app.FragmentActivity
 /**
  * Расширения для ui-классов.
  */
-fun FragmentActivity.replaceFragment(fragment: Fragment, id: Int) {
+fun FragmentActivity.replaceFragment(fragment: Fragment, containerId: Int) {
     supportFragmentManager.beginTransaction()
-            .replace(id, fragment)
+            .replace(containerId, fragment)
             .addToBackStack(null)
             .commitAllowingStateLoss()
 }

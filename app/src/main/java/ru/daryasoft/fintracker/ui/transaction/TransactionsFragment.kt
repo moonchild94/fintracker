@@ -2,6 +2,7 @@ package ru.daryasoft.fintracker.ui.transaction
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class TransactionsFragment : DaggerFragment() {
     }
 
     private val transactionListAdapter = TransactionListAdapter(listOf()) { position -> onDeleteTransaction(position) }
+    private var addTransactionListener: AddTransactionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,7 +42,7 @@ class TransactionsFragment : DaggerFragment() {
         transaction_list.layoutManager = LinearLayoutManager(context)
         transaction_list.adapter = transactionListAdapter
 
-        transaction_list.setOnClickListener { onAddTransaction() }
+        add_transaction.setOnClickListener { addTransactionListener?.onAddTransactionOpen() }
     }
 
     override fun onStart() {
@@ -53,9 +55,17 @@ class TransactionsFragment : DaggerFragment() {
         super.onStop()
     }
 
-    private fun onAddTransaction() {
-        OnAddTransactionDialogFragment.newInstance { transaction -> viewModel.onAddTransaction(transaction) }
-                .show(fragmentManager, "OnAddTransactionDialogFragment")
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context !is AddTransactionListener) {
+            throw IllegalArgumentException()
+        }
+        addTransactionListener = context
+    }
+
+    override fun onDetach() {
+        addTransactionListener = null
+        super.onDetach()
     }
 
     private fun onDeleteTransaction(position: Int) {

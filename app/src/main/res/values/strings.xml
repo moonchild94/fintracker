@@ -4,6 +4,7 @@
     <string name="title_fragment_balance">Главная</string>
     <string name="title_fragment_operation">Операции</string>
     <string name="title_fragment_settings">Настройки</string>
+    <string name="title_fragment_add_transaction">Добавление операции</string>
 
     <string name="title_main_page_menu_item">Главная</string>
     <string name="title_accounts_menu_item">Счета</string>
