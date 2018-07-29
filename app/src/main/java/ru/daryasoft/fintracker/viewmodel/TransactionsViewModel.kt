@@ -3,6 +3,7 @@ package ru.daryasoft.fintracker.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.repository.RateRepository
 import ru.daryasoft.fintracker.repository.TransactionRepository
 import javax.inject.Inject
 

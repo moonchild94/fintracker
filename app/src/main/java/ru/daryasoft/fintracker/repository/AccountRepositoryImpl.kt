@@ -15,11 +15,14 @@ class AccountRepositoryImpl @Inject constructor() : AccountRepository {
 
     private val accounts = MutableLiveData<List<Account>>()
 
-    override fun getAll(): LiveData<List<Account>> {
+    init {
         accounts.value = mutableListOf(
                 Account("Наличные руб", 600.00, Currency.RUB),
                 Account("Карта руб", 1600.00, Currency.RUB),
                 Account("Карта доллары", 20600.00, Currency.USD))
+    }
+
+    override fun getAll(): LiveData<List<Account>> {
         return accounts
     }
 

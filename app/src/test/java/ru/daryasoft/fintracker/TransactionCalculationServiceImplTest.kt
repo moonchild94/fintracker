@@ -9,27 +9,27 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
-import ru.daryasoft.fintracker.calculator.FinCalculator
+import ru.daryasoft.fintracker.calculator.TransactionCalculationServiceImpl
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
-import ru.daryasoft.fintracker.repository.CurrencyRepository
+import ru.daryasoft.fintracker.repository.RateRepository
 import java.util.*
 
 /**
  * Unit-тесты для сервиса для выполнения финансовых расчетов.
  */
-class FinCalculatorTest {
+class TransactionCalculationServiceImplTest {
     @JvmField
     @Rule
     var mockitoRule = MockitoJUnit.rule()
 
     @Mock
-    private lateinit var currencyRepository: CurrencyRepository
+    private lateinit var rateRepository: RateRepository
 
     @InjectMocks
-    private lateinit var finCalculator: FinCalculator
+    private lateinit var transactionCalculationServiceImpl: TransactionCalculationServiceImpl
 
     private val transactions = listOf(
             Transaction(Currency.RUB, 10000.00, TransactionType.INCOME, Date()),
@@ -40,24 +40,24 @@ class FinCalculatorTest {
 
     @Test
     fun rubAndTransactionsInDifferentCurrency_sum_returnsExpectedSum() {
-        Mockito.`when`(currencyRepository.getRate(eq(Currency.RUB), eq(Currency.RUB), any())).thenReturn(1.00)
-        Mockito.`when`(currencyRepository.getRate(eq(Currency.USD), eq(Currency.RUB), any())).thenReturn(50.00)
+        Mockito.`when`(rateRepository.getRateToDefault(eq(Currency.RUB), eq(Currency.RUB), any())).thenReturn(1.00)
+        Mockito.`when`(rateRepository.getRateToDefault(eq(Currency.USD), eq(Currency.RUB), any())).thenReturn(50.00)
 
         val expectedBalance = Balance(Currency.RUB, 8000.0)
 
-        val actualBalance = finCalculator.sum(transactions, Currency.RUB)
+        val actualBalance = transactionCalculationServiceImpl.aggregateByCategories(transactions, Currency.RUB)
 
         Assert.assertEquals(expectedBalance, actualBalance)
     }
 
     @Test
     fun usdAndTransactionsInDifferentCurrency_sum_returnsExpectedSum() {
-        Mockito.`when`(currencyRepository.getRate(eq(Currency.USD), eq(Currency.USD), any())).thenReturn(1.00)
-        Mockito.`when`(currencyRepository.getRate(eq(Currency.RUB), eq(Currency.USD), any())).thenReturn(0.02)
+        Mockito.`when`(rateRepository.getRateToDefault(eq(Currency.USD), eq(Currency.USD), any())).thenReturn(1.00)
+        Mockito.`when`(rateRepository.getRateToDefault(eq(Currency.RUB), eq(Currency.USD), any())).thenReturn(0.02)
 
         val expectedBalance = Balance(Currency.USD, 160.0)
 
-        val actualBalance = finCalculator.sum(transactions, Currency.USD)
+        val actualBalance = transactionCalculationServiceImpl.aggregateByCategories(transactions, Currency.USD)
 
         Assert.assertEquals(expectedBalance, actualBalance)
     }

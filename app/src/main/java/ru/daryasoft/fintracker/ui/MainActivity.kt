@@ -42,7 +42,7 @@ class MainActivity : DaggerAppCompatActivity(), AddTransactionListener {
             when (menuItem.itemId) {
                 R.id.main_page -> replaceFragment(MainFragment.newInstance(), R.id.main_fragment_container)
                 R.id.accounts -> replaceFragment(AccountsFragment.newInstance(), R.id.main_fragment_container)
-                R.id.categories -> replaceFragment(SettingsFragment.newInstance(), R.id.main_fragment_container)
+                R.id.categories -> replaceFragment(CategoriesFragment.newInstance(), R.id.main_fragment_container)
                 R.id.settings -> replaceFragment(SettingsFragment.newInstance(), R.id.main_fragment_container)
                 else -> throw IllegalArgumentException()
             }

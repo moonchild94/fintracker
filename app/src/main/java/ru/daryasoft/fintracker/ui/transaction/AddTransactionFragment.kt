@@ -65,7 +65,7 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initTransactionTypeSwitcher() {
-        transaction_type.setOnCheckedChangeListener { button, isChecked ->
+        transaction_type.setOnCheckedChangeListener { _, isChecked ->
             category_spinner.adapter = CustomArrayAdapter(context,
                     categoriesViewModel.getCategoriesByType(
                             if (isChecked) TransactionType.INCOME else TransactionType.OUTCOME).value
@@ -93,14 +93,14 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initAccountSpinner() {
-        account_spinner.adapter = CustomArrayAdapter(context, accountsViewModel.accounts.value
+        transaction_account_spinner.adapter = CustomArrayAdapter(context, accountsViewModel.accounts.value
                 ?: listOf()) { account -> account.name }
-        account_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        transaction_account_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                transaction_currency.text = (account_spinner.selectedItem as Account).currency.name
+                transaction_currency.text = (transaction_account_spinner.selectedItem as Account).currency.name
             }
         }
     }
@@ -113,12 +113,12 @@ class AddTransactionFragment : DaggerFragment() {
 
     private fun initOkButton() {
         add_transaction_ok.setOnClickListener {
-            val account = account_spinner.selectedItem as Account
+            val account = transaction_account_spinner.selectedItem as Account
             val transactionSum = transaction_sum.text.toString().toDouble()
-            val transactionType = if (transaction_type.isChecked) TransactionType.INCOME else TransactionType.OUTCOME
             val date = Date()
             val category = category_spinner.selectedItem as Category
-            transactionsViewModel.onAddTransaction(Transaction(account, transactionSum, transactionType, date, category))
+            val transaction = Transaction(account, transactionSum, date, category)
+            transactionsViewModel.onAddTransaction(transaction)
             addTransactionListener?.onAddTransactionComplete()
         }
     }

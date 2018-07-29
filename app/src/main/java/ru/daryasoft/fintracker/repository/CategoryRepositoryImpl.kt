@@ -9,11 +9,11 @@ import javax.inject.Inject
 /**
  * Репозиторий для работы с категориями.
  */
-class CategoryRepositoryImpl @Inject constructor(): CategoryRepository {
+class CategoryRepositoryImpl @Inject constructor() : CategoryRepository {
 
     private val categories = MutableLiveData<List<Category>>()
 
-    override fun getAll(): LiveData<List<Category>> {
+    init {
         categories.value = mutableListOf(
                 Category("Зарплата", TransactionType.INCOME,
                         "ic_salary"),
@@ -23,8 +23,12 @@ class CategoryRepositoryImpl @Inject constructor(): CategoryRepository {
                         "ic_transport"),
                 Category("Еда", TransactionType.OUTCOME,
                         "ic_food"))
+    }
+
+    override fun getAll(): LiveData<List<Category>> {
         return categories
     }
+
 
     override fun findByTransactionType(transactionType: TransactionType): LiveData<List<Category>> {
         val categoriesByType = MutableLiveData<List<Category>>()

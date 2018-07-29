@@ -7,12 +7,37 @@
     android:orientation="vertical"
     tools:context=".ui.BalanceFragment">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        tools:context=".ui.BalanceFragment">
+
+        <Spinner
+            android:id="@+id/account_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <Spinner
+            android:id="@+id/currency_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/balance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/balanceTitleTextSize"
-        android:text="@string/balance_title" />
+        android:text="Баланс"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="5dp"
+        android:gravity="center" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,18 +48,25 @@
         tools:context=".ui.BalanceFragment">
 
         <TextView
-            android:id="@+id/balance"
+            android:id="@+id/balance_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/balanceMargin"
-            android:textSize="@dimen/balanceTextSize" />
+            android:textSize="20sp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center" />
 
-        <Spinner
-            android:id="@+id/currency_spinner"
+        <TextView
+            android:id="@+id/balance_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:gravity="center" />
 
     </LinearLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/balance_diagram"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

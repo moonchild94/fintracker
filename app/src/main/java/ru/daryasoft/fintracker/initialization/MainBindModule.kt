@@ -9,8 +9,8 @@ import ru.daryasoft.fintracker.ui.BalanceFragment
 import javax.inject.Singleton
 import dagger.Binds
 import dagger.multibindings.IntoMap
-import ru.daryasoft.fintracker.calculator.FinCalculator
-import ru.daryasoft.fintracker.calculator.IFinCalculator
+import ru.daryasoft.fintracker.calculator.TransactionCalculationServiceImpl
+import ru.daryasoft.fintracker.calculator.TransactionCalculationService
 import ru.daryasoft.fintracker.repository.*
 import ru.daryasoft.fintracker.ui.account.AccountsFragment
 import ru.daryasoft.fintracker.ui.transaction.AddTransactionFragment
@@ -39,7 +39,7 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun bindFinCalculator(finCalculator: FinCalculator): IFinCalculator
+    fun bindFinCalculator(transactionCalculationServiceImpl: TransactionCalculationServiceImpl): TransactionCalculationService
 
     @Binds
     @Singleton
@@ -51,7 +51,7 @@ interface MainBindModule {
 
     @Binds
     @Singleton
-    fun bindRateRepository(rateRepository: CurrencyRepositoryImpl): CurrencyRepository
+    fun bindRateRepository(rateRepository: RateRepositoryImpl): RateRepository
 
     @Binds
     @Singleton

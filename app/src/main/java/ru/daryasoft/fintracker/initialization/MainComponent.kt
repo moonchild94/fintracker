@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import ru.daryasoft.fintracker.repository.RateWorker
 import javax.inject.Singleton
 
 /**
@@ -23,4 +24,6 @@ interface MainComponent : AndroidInjector<FinTrackerApplication> {
 
         fun build(): MainComponent
     }
+
+    fun injectRateWorker(rateWorker: RateWorker)
 }

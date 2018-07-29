@@ -1,13 +1,11 @@
 package ru.daryasoft.fintracker.calculator
 
-import ru.daryasoft.fintracker.entity.Balance
-import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.entity.*
 
 /**
  * Сервис для выполнения финансовых расчетов.
  */
-interface IFinCalculator {
+interface TransactionCalculationService {
     /**
      * Подсчитывает итоговую сумму для переданных транзакций.
      *
@@ -16,5 +14,5 @@ interface IFinCalculator {
      *
      * @return итоговая сумма.
      */
-    fun sum(transactions: List<Transaction>, targetCurrency: Currency): Balance
+    fun aggregateByCategories(account: Account?, categories: List<Category>, targetCurrency: Currency): List<TransactionAggregateInfo>
 }

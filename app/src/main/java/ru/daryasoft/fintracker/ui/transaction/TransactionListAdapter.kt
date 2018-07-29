@@ -24,7 +24,7 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
         val transaction = transactions[position]
         val uri = Uri.parse("android.resource://ru.daryasoft.fintracker/drawable/" + transaction.category.iconUri)
         holder.categoryIcon.setImageURI(uri)
-        holder.transactionType.setImageDrawable(holder.transactionType.context.resources.getDrawable(getIconForTransactionType(transaction.type)))
+        holder.transactionType.setImageDrawable(holder.transactionType.context.resources.getDrawable(getIconForTransactionType(transaction.category.transactionType)))
         holder.transactionSum.text = transaction.sum.toString()
         holder.transactionCurrency.text = transaction.account.currency.name
         holder.transactionDate.text = getDateFormat(holder.transactionDate.context).format(transaction.date)

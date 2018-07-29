@@ -3,39 +3,60 @@ package ru.daryasoft.fintracker.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import ru.daryasoft.fintracker.calculator.IFinCalculator
-import ru.daryasoft.fintracker.entity.Balance
-import ru.daryasoft.fintracker.entity.Currency
-import ru.daryasoft.fintracker.Constants
-import ru.daryasoft.fintracker.repository.CurrencyRepository
-import ru.daryasoft.fintracker.repository.TransactionRepository
+import ru.daryasoft.fintracker.calculator.TransactionCalculationService
+import ru.daryasoft.fintracker.entity.*
+import ru.daryasoft.fintracker.repository.AccountRepository
+import ru.daryasoft.fintracker.repository.CategoryRepository
+import ru.daryasoft.fintracker.repository.RateRepository
 import javax.inject.Inject
 
 /**
  * ViewModel для баланса.
  */
-class BalanceViewModel @Inject constructor(currencyRepository: CurrencyRepository,
-                                           private val transactionRepository: TransactionRepository,
-                                           private val finCalculator: IFinCalculator) : ViewModel() {
+class BalanceViewModel @Inject constructor(private val accountRepository: AccountRepository,
+                                           private val categoryRepository: CategoryRepository,
+                                           private val rateRepository: RateRepository,
+                                           private val transactionCalculationService: TransactionCalculationService) : ViewModel() {
 
-    private val balance = MutableLiveData<Balance>()
-
-    init {
-        currencyRepository.getDefaultCurrency().observeForever {
-            recalculateBalance(it ?: Constants.DEFAULT_CURRENCY)
-        }
+    val accounts by lazy {
+        accountRepository.getAll()
     }
 
-    fun getBalance(): LiveData<Balance> {
-        return balance
+    val account by lazy {
+        val data = MutableLiveData<Account>()
+        data.value = accountRepository.getAll().value?.get(0)
+        data
     }
 
-    fun setCurrentCurrency(currency: Currency) {
-        recalculateBalance(currency)
+    val currency by lazy {
+        val data = MutableLiveData<Currency>()
+        data.value = account.value?.currency ?: Currency.RUB
+        data
     }
 
-    private fun recalculateBalance(currency: Currency) {
-        val transactions = transactionRepository.getAll()
-        balance.value = finCalculator.sum(transactions.value ?: listOf(), currency)
+    val balance = MutableLiveData<Balance>()
+
+    val transactionAggregateInfoList by lazy {
+        val data = MutableLiveData<List<TransactionAggregateInfo>>()
+        data.value = transactionCalculationService.aggregateByCategories(account.value,
+                categoryRepository.findByTransactionType(TransactionType.OUTCOME).value
+                        ?: listOf(), Currency.RUB)
+        data
+    }
+
+    fun onChangeAccount(newAccount: Account) {
+        account.value = newAccount
+        onChangeCurrency(account.value?.currency ?: Currency.RUB)
+    }
+
+    fun onChangeCurrency(newCurrency: Currency) {
+        val rateToDefault = rateRepository.getRateToDefault(account.value?.currency ?: Currency.RUB)
+        val rateFromDefault = rateRepository.getRateFromDefault(newCurrency)
+        currency.value = newCurrency
+        balance.value = Balance(newCurrency, (account.value?.amount
+                ?: 0.0) * rateToDefault * rateFromDefault)
+        transactionAggregateInfoList.value = transactionCalculationService.aggregateByCategories(account.value,
+                categoryRepository.findByTransactionType(TransactionType.OUTCOME).value
+                        ?: listOf(), newCurrency)
     }
 }
