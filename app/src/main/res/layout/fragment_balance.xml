@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".ui.BalanceFragment">
+    tools:context=".balance.BalanceFragment">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        tools:context=".ui.BalanceFragment">
+        tools:context=".balance.BalanceFragment">
 
         <Spinner
             android:id="@+id/account_spinner"
@@ -33,10 +33,10 @@
         android:id="@+id/balance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Баланс"
-        android:textSize="20sp"
+        android:text="@string/balance_title"
+        android:textSize="@dimen/balanceTextSize"
         android:textStyle="bold"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="@dimen/balanceMargin"
         android:gravity="center" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,21 +45,21 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        tools:context=".ui.BalanceFragment">
+        tools:context=".balance.BalanceFragment">
 
         <TextView
             android:id="@+id/balance_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginEnd="5dp"
+            android:textSize="@dimen/balanceTextSize"
+            android:layout_marginEnd="@dimen/balanceMargin"
             android:gravity="center" />
 
         <TextView
             android:id="@+id/balance_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="@dimen/balanceTextSize"
             android:gravity="center" />
 
     </LinearLayout>

@@ -8,8 +8,8 @@ import dagger.Provides
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
-import ru.daryasoft.fintracker.repository.RateNetworkDataSource
-import ru.daryasoft.fintracker.repository.ResponseToRateConverter
+import ru.daryasoft.fintracker.rate.RateNetworkDataSource
+import ru.daryasoft.fintracker.rate.ResponseToRateConverter
 import java.lang.reflect.Type
 import javax.inject.Singleton
 

@@ -1,15 +1,19 @@
 package ru.daryasoft.fintracker.calculator
 
-import ru.daryasoft.fintracker.entity.*
+import ru.daryasoft.fintracker.entity.Account
+import ru.daryasoft.fintracker.entity.Category
+import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.entity.TransactionAggregateInfo
 
 /**
  * Сервис для выполнения финансовых расчетов.
  */
 interface TransactionCalculationService {
     /**
-     * Подсчитывает итоговую сумму для переданных транзакций.
+     * Подсчитывает итоговую сумму по категориям.
      *
-     * @param transactions список транзакций.
+     * @param account счет.
+     * @categories список категорий
      * @param targetCurrency валюта, в которой требуется подсчитать итоговую сумму.
      *
      * @return итоговая сумма.

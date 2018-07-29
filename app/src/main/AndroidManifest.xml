@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".initialization.FinTrackerApplication">
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".main.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

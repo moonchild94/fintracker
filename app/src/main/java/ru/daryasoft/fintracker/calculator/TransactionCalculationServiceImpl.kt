@@ -1,15 +1,13 @@
 package ru.daryasoft.fintracker.calculator
 
 import ru.daryasoft.fintracker.entity.*
-import ru.daryasoft.fintracker.repository.RateRepository
-import ru.daryasoft.fintracker.repository.TransactionRepository
+import ru.daryasoft.fintracker.transaction.TransactionRepository
 import javax.inject.Inject
 
 /**
  * Сервис для выполнения финансовых расчетов.
  */
-class TransactionCalculationServiceImpl @Inject constructor(private val rateRepository: RateRepository,
-                                                            private val transactionRepository: TransactionRepository) : TransactionCalculationService {
+class TransactionCalculationServiceImpl @Inject constructor(private val transactionRepository: TransactionRepository) : TransactionCalculationService {
     override fun aggregateByCategories(account: Account?, categories: List<Category>, targetCurrency: Currency): List<TransactionAggregateInfo> {
         val result = mutableListOf<TransactionAggregateInfo>()
 

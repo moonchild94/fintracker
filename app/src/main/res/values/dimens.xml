@@ -1,6 +1,5 @@
 <resources>
-    <dimen name="balanceTitleTextSize">30sp</dimen>
-    <dimen name="balanceTextSize">30sp</dimen>
+    <dimen name="balanceTextSize">20sp</dimen>
     <dimen name="balanceMargin">5dp</dimen>
 
     <dimen name="transactionColumnWidth">0dp</dimen>
@@ -14,4 +13,24 @@
     <dimen name="accountPadding">5dp</dimen>
     <dimen name="accountMargin">3dp</dimen>
     <dimen name="accountNameTextSize">20sp</dimen>
+
+    <dimen name="addingAccountTextSize">20sp</dimen>
+    <dimen name="addingAccountContainerPadding">10dp</dimen>
+    <dimen name="addingAccountMargin">20dp</dimen>
+    <dimen name="addingAccountInputTextWidth">200dp</dimen>
+
+    <dimen name="addAccountButtonMargin">16dp</dimen>
+
+    <dimen name="addTransactionButtonMargin">16dp</dimen>
+
+    <dimen name="transactionItemPadding">5dp</dimen>
+    <dimen name="addTransactionCategoryIconSize">60dp</dimen>
+    <dimen name="addTransactionTextSize">20sp</dimen>
+    <dimen name="addTransactionContainerPadding">10dp</dimen>
+    <dimen name="addTransactionDateMargin">20dp</dimen>
+    <dimen name="addTransactionDateSelectorWidth">50dp</dimen>
+    <dimen name="addTransactionTypeSwitchPadding">5dp</dimen>
+    <dimen name="addTransactionSumWidth">200dp</dimen>
+    <dimen name="addTransactionOkButtonWidth">100dp</dimen>
+
 </resources>

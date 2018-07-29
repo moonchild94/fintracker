@@ -22,12 +22,21 @@
     <string name="app_icon_description">Иконка приложения</string>
     <string name="transaction_type_description">Тип транзакции</string>
 
-    <string name="balance_title">Ваш баланс</string>
+    <string name="balance_title">Баланс</string>
 
     <string name="author">© Дарья Калмыкова</string>
     <string name="version">Версия 0.0.1</string>
 
     <string name="usd">USD</string>
     <string name="rub">RUB</string>
+
+    <string name="adding_account_name">Название</string>
+    <string name="adding_account_start_balance">Начальный баланс</string>
+    <string name="adding_account_start_balance_value">0.0</string>
+
+    <string name="add_transaction_button_ok_text">ОК</string>
+    <string name="add_transaction_type">Тип операции</string>
+    <string name="add_transaction_type_input">Доход</string>
+    <string name="add_transaction_type_output">Расход</string>
 
 </resources>

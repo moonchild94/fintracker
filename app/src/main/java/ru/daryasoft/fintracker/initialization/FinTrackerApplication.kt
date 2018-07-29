@@ -5,8 +5,10 @@ import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.DaggerApplication
 import dagger.android.support.HasSupportFragmentInjector
-import ru.daryasoft.fintracker.repository.RateWorker
+import ru.daryasoft.fintracker.rate.RateWorker
 import java.util.concurrent.TimeUnit
+
+private const val WORK_MANAGER_TAG = "rateWorker"
 
 /**
  * Класс приложения.
@@ -19,7 +21,6 @@ class FinTrackerApplication : DaggerApplication(), HasActivityInjector, HasSuppo
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return mainComponent
-
     }
 
     override fun onCreate() {
@@ -28,16 +29,17 @@ class FinTrackerApplication : DaggerApplication(), HasActivityInjector, HasSuppo
         val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
+
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(RateWorker::class.java)
                 .setConstraints(constraints)
                 .build()
         WorkManager.getInstance().enqueue(oneTimeWorkRequest)
 
-        val statusesByTag = WorkManager.getInstance().getStatusesByTag("rateWorker").value
+        val statusesByTag = WorkManager.getInstance().getStatusesByTag(WORK_MANAGER_TAG).value
         if (statusesByTag == null || statusesByTag.isEmpty() || statusesByTag[0] == null || statusesByTag[0].state.isFinished) {
             val periodicWorkRequest = PeriodicWorkRequest.Builder(RateWorker::class.java, 12, TimeUnit.HOURS, 1, TimeUnit.HOURS)
                     .setConstraints(constraints)
-                    .addTag("rateWorker")
+                    .addTag(WORK_MANAGER_TAG)
                     .build()
             WorkManager.getInstance().enqueue(periodicWorkRequest)
         }

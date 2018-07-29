@@ -14,7 +14,7 @@ import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
-import ru.daryasoft.fintracker.repository.RateRepository
+import ru.daryasoft.fintracker.rate.RateRepository
 import java.util.*
 
 /**

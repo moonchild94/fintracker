@@ -4,24 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".ui.transaction.AddTransactionFragment">
+    android:padding="@dimen/addTransactionContainerPadding"
+    tools:context=".transaction.AddTransactionFragment">
 
     <TextView
         android:id="@+id/transaction_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/addTransactionDateMargin"
         android:gravity="center_vertical"
-        android:text="02.07.2018"
-        android:textSize="20sp"
+        android:textSize="@dimen/addTransactionTextSize"
         app:layout_constraintBottom_toBottomOf="@id/transaction_date_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/transaction_date_selector" />
 
     <Button
         android:id="@+id/transaction_date_selector"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/addTransactionDateSelectorWidth"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_calendar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,12 +31,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/transaction_date_selector"
-        android:switchPadding="5dp"
+        android:switchPadding="@dimen/addTransactionTypeSwitchPadding"
         android:track="@drawable/transaction_type_switch"
         android:showText="true"
-        android:text="Тип операции"
-        android:textOff="Расход"
-        android:textOn="Доход"/>
+        android:text="@string/add_transaction_type"
+        android:textOff="@string/add_transaction_type_input"
+        android:textOn="@string/add_transaction_type_output"/>
 
     <Spinner
         android:id="@+id/category_spinner"
@@ -58,7 +57,7 @@
 
     <EditText
         android:id="@+id/transaction_sum"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/addTransactionSumWidth"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:inputType="numberDecimal"
@@ -76,10 +75,11 @@
 
     <Button
         android:id="@+id/add_transaction_ok"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/addTransactionOkButtonWidth"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        android:text="Ok"
+        android:text="@string/add_transaction_button_ok_text"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transaction_sum"/>

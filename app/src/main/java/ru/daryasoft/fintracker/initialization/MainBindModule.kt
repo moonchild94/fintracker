@@ -4,18 +4,24 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import ru.daryasoft.fintracker.ui.MainActivity
-import ru.daryasoft.fintracker.ui.BalanceFragment
+import ru.daryasoft.fintracker.main.MainActivity
+import ru.daryasoft.fintracker.balance.BalanceFragment
 import javax.inject.Singleton
 import dagger.Binds
 import dagger.multibindings.IntoMap
+import ru.daryasoft.fintracker.account.AccountRepository
+import ru.daryasoft.fintracker.account.AccountRepositoryImpl
 import ru.daryasoft.fintracker.calculator.TransactionCalculationServiceImpl
 import ru.daryasoft.fintracker.calculator.TransactionCalculationService
-import ru.daryasoft.fintracker.repository.*
-import ru.daryasoft.fintracker.ui.account.AccountsFragment
-import ru.daryasoft.fintracker.ui.transaction.AddTransactionFragment
-import ru.daryasoft.fintracker.ui.transaction.TransactionsFragment
-import ru.daryasoft.fintracker.viewmodel.*
+import ru.daryasoft.fintracker.rate.*
+import ru.daryasoft.fintracker.account.AccountsFragment
+import ru.daryasoft.fintracker.account.AccountsViewModel
+import ru.daryasoft.fintracker.balance.BalanceViewModel
+import ru.daryasoft.fintracker.category.CategoriesViewModel
+import ru.daryasoft.fintracker.category.CategoryRepository
+import ru.daryasoft.fintracker.category.CategoryRepositoryImpl
+import ru.daryasoft.fintracker.common.ViewModelFactory
+import ru.daryasoft.fintracker.transaction.*
 
 /**
  * Dagger-модуль с поставщиками зависимостей.
