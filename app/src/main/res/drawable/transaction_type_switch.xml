@@ -4,9 +4,9 @@
         android:right="4dp"
         android:left="4dp">
         <shape android:shape="rectangle"
-            android:tint="@color/transaction_type_switch_color">
+            android:tint="@color/colorPrimary">
             <corners android:radius="2dp" />
-            <solid android:color="@color/transaction_type_switch_color" />
+            <solid android:color="@color/colorPrimary" />
             <size android:height="20dp" />
         </shape>
     </item>

@@ -4,8 +4,5 @@
     <color name="colorPrimaryDark">#666666</color>
     <color name="colorAccent">#72c4b2</color>
 
-    <color name="colorInputTransactionType">#72c48c</color>
-    <color name="colorOutputTransactionType">#dc8080</color>
-
-    <color name="colorAccountName">#918c8c</color>
+    <color name="colorTitleText">#918c8c</color>
 </resources>

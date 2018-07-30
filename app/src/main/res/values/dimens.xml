@@ -31,7 +31,7 @@
     <dimen name="addTransactionMargin">20dp</dimen>
     <dimen name="addTransactionDateSelectorWidth">50dp</dimen>
     <dimen name="addTransactionTypeSwitchPadding">5dp</dimen>
-    <dimen name="addTransactionSumWidth">200dp</dimen>
+    <dimen name="addTransactionSumWidth">300dp</dimen>
     <dimen name="addTransactionOkButtonWidth">100dp</dimen>
 
 </resources>
