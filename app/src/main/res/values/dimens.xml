@@ -13,7 +13,7 @@
     <dimen name="accountPadding">5dp</dimen>
     <dimen name="accountMargin">3dp</dimen>
     <dimen name="accountNameTextSize">20sp</dimen>
-    <dimen name="accountHeight">60dp</dimen>
+    <dimen name="accountHeight">65dp</dimen>
 
     <dimen name="addingAccountTextSize">20sp</dimen>
     <dimen name="addingAccountContainerPadding">10dp</dimen>
