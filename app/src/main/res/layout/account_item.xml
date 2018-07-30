@@ -4,36 +4,39 @@
     android:id="@+id/account"
     android:layout_margin="@dimen/accountMargin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/accountHeight">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/accountName"
             android:textSize="@dimen/accountNameTextSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:padding="@dimen/accountPadding"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+            android:textColor="@color/colorAccountName"/>
 
         <TextView
             android:id="@+id/accountBalance"
+            android:textSize="@dimen/accountNameTextSize"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/accountPadding"
-            android:layout_alignParentStart="true"
-            app:layout_constraintTop_toBottomOf="@id/accountName" />
+            android:gravity="center_vertical"
+            android:layout_gravity="end"/>
 
         <TextView
             android:id="@+id/accountCurrency"
+            android:textSize="@dimen/accountNameTextSize"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/accountPadding"
-            app:layout_constraintStart_toEndOf="@id/accountBalance"
-            app:layout_constraintTop_toBottomOf="@id/accountName" />
-    </android.support.constraint.ConstraintLayout>
+            android:gravity="center_vertical"
+            android:layout_gravity="end"/>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

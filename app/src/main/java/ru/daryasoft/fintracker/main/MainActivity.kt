@@ -2,6 +2,8 @@ package ru.daryasoft.fintracker.main
 
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.Gravity
+import android.view.MenuItem
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.daryasoft.fintracker.R
@@ -30,7 +32,22 @@ class MainActivity : DaggerAppCompatActivity(), AddTransactionListener {
     }
 
     override fun onAddTransactionComplete() {
-        replaceFragment(MainFragment.newInstance(), R.id.main_fragment_container)
+        replaceFragment(MainFragment.newInstance(1), R.id.main_fragment_container)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                if (drawer_layout.isDrawerOpen(nav_view)) {
+                    drawer_layout.closeDrawer(Gravity.START)
+                }
+                else {
+                    drawer_layout.openDrawer(Gravity.START)
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initSideMenu() {

@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.common
 
 import android.content.Context
 import android.view.View

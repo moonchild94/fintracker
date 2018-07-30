@@ -53,8 +53,7 @@ class AccountsFragment : DaggerFragment() {
     }
 
     private fun onAddAccount() {
-        AddAccountDialogFragment.newInstance { account -> viewModel.onAddAccount(account) }
-                .show(fragmentManager, "AddAccountDialogFragment")
+        AddAccountDialogFragment.newInstance().show(fragmentManager, "AddAccountDialogFragment")
     }
 
     private fun onDeleteAccount(position: Int) {

@@ -12,6 +12,8 @@ import ru.daryasoft.fintracker.R
 
 class MainFragment : Fragment() {
 
+    private var tabPosition = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
@@ -25,6 +27,7 @@ class MainFragment : Fragment() {
     private fun initTabLayout() {
         val adapter = MainFragmentPagerAdapter(activity, childFragmentManager)
         view_pager.adapter = adapter
+        view_pager.currentItem = tabPosition
 
         sliding_tabs.setupWithViewPager(view_pager)
         sliding_tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -46,6 +49,10 @@ class MainFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = MainFragment()
+        fun newInstance(tabPosition: Int = 0) : MainFragment {
+            val mainFragment = MainFragment()
+            mainFragment.tabPosition = tabPosition
+            return mainFragment
+        }
     }
 }

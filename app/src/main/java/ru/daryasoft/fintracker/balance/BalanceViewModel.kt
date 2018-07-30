@@ -24,7 +24,7 @@ class BalanceViewModel @Inject constructor(private val accountRepository: Accoun
 
     val account by lazy {
         val liveData = MutableLiveData<Account>()
-        liveData.value = accountRepository.getAll().value?.get(0)
+        liveData.value = accounts.value?.get(0)
         liveData
     }
 

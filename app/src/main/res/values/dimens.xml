@@ -13,6 +13,7 @@
     <dimen name="accountPadding">5dp</dimen>
     <dimen name="accountMargin">3dp</dimen>
     <dimen name="accountNameTextSize">20sp</dimen>
+    <dimen name="accountHeight">60dp</dimen>
 
     <dimen name="addingAccountTextSize">20sp</dimen>
     <dimen name="addingAccountContainerPadding">10dp</dimen>
@@ -27,7 +28,7 @@
     <dimen name="addTransactionCategoryIconSize">60dp</dimen>
     <dimen name="addTransactionTextSize">20sp</dimen>
     <dimen name="addTransactionContainerPadding">10dp</dimen>
-    <dimen name="addTransactionDateMargin">20dp</dimen>
+    <dimen name="addTransactionMargin">20dp</dimen>
     <dimen name="addTransactionDateSelectorWidth">50dp</dimen>
     <dimen name="addTransactionTypeSwitchPadding">5dp</dimen>
     <dimen name="addTransactionSumWidth">200dp</dimen>

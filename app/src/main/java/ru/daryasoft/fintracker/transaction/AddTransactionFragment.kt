@@ -14,13 +14,15 @@ import android.widget.AdapterView
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_add_transaction.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.account.AccountsViewModel
+import ru.daryasoft.fintracker.category.CategoriesViewModel
+import ru.daryasoft.fintracker.common.CustomArrayAdapter
+import ru.daryasoft.fintracker.common.getViewModel
+import ru.daryasoft.fintracker.common.hideKeyboard
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Category
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
-import ru.daryasoft.fintracker.common.getViewModel
-import ru.daryasoft.fintracker.account.AccountsViewModel
-import ru.daryasoft.fintracker.category.CategoriesViewModel
 import java.util.*
 import javax.inject.Inject
 
@@ -65,7 +67,7 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initTransactionTypeSwitcher() {
-        transaction_type.setOnCheckedChangeListener { _, isChecked ->
+        adding_transaction_type.setOnCheckedChangeListener { _, isChecked ->
             category_spinner.adapter = CustomArrayAdapter(context,
                     categoriesViewModel.getCategoriesByType(
                             if (isChecked) TransactionType.INCOME else TransactionType.OUTCOME).value
@@ -114,7 +116,7 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initOkButton() {
-        transaction_sum.addTextChangedListener(object : TextWatcher {
+        transaction_amount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -128,12 +130,13 @@ class AddTransactionFragment : DaggerFragment() {
 
         add_transaction_ok.setOnClickListener {
             val account = transaction_account_spinner.selectedItem as Account
-            val transactionSum = transaction_sum.text.toString().toDouble()
+            val transactionSum = transaction_amount.text.toString().toDouble()
             val date = Date()
             val category = category_spinner.selectedItem as Category
             val transaction = Transaction(account, transactionSum, date, category)
             transactionsViewModel.onAddTransaction(transaction)
             addTransactionListener?.onAddTransactionComplete()
+            hideKeyboard(transaction_amount)
         }
     }
 

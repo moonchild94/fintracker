@@ -30,13 +30,20 @@
     <string name="usd">USD</string>
     <string name="rub">RUB</string>
 
+    <string name="adding_account_title">Add account</string>
     <string name="adding_account_name">Name</string>
     <string name="adding_account_start_balance">Start balance</string>
+    <string name="adding_account_positive_button_title">OK</string>
+    <string name="adding_account_negative_button_title">Cancel</string>
     <string name="adding_account_start_balance_value">0.0</string>
 
     <string name="add_transaction_button_ok_text">OK</string>
-    <string name="add_transaction_type">Operation type</string>
+    <string name="add_transaction_type">Operation type:</string>
     <string name="add_transaction_type_input">Income</string>
     <string name="add_transaction_type_output">Outcome</string>
+    <string name="add_transaction_date_title">Date:</string>
+    <string name="add_transaction_category_title">Category:</string>
+    <string name="add_transaction_account_title">Account:</string>
+    <string name="add_transaction_amount_title">Operation amount:</string>
 
 </resources>

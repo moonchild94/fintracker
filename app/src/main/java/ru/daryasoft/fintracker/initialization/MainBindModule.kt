@@ -9,13 +9,10 @@ import ru.daryasoft.fintracker.balance.BalanceFragment
 import javax.inject.Singleton
 import dagger.Binds
 import dagger.multibindings.IntoMap
-import ru.daryasoft.fintracker.account.AccountRepository
-import ru.daryasoft.fintracker.account.AccountRepositoryImpl
+import ru.daryasoft.fintracker.account.*
 import ru.daryasoft.fintracker.calculator.TransactionCalculationServiceImpl
 import ru.daryasoft.fintracker.calculator.TransactionCalculationService
 import ru.daryasoft.fintracker.rate.*
-import ru.daryasoft.fintracker.account.AccountsFragment
-import ru.daryasoft.fintracker.account.AccountsViewModel
 import ru.daryasoft.fintracker.balance.BalanceViewModel
 import ru.daryasoft.fintracker.category.CategoriesViewModel
 import ru.daryasoft.fintracker.category.CategoryRepository
@@ -28,6 +25,7 @@ import ru.daryasoft.fintracker.transaction.*
  */
 @Module
 interface MainBindModule {
+
     @ContributesAndroidInjector
     fun contributeMainActivityInjector(): MainActivity
 
@@ -42,6 +40,9 @@ interface MainBindModule {
 
     @ContributesAndroidInjector
     fun contributeAddTransactionFragmentInjector(): AddTransactionFragment
+
+    @ContributesAndroidInjector
+    fun contributeAddAccountDialogFragmentInjector(): AddAccountDialogFragment
 
     @Binds
     @Singleton

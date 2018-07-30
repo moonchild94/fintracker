@@ -16,15 +16,17 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_balance.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.common.CustomArrayAdapter
+import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Balance
 import ru.daryasoft.fintracker.entity.Currency
 import ru.daryasoft.fintracker.entity.TransactionAggregateInfo
-import ru.daryasoft.fintracker.transaction.CustomArrayAdapter
-import ru.daryasoft.fintracker.account.AccountsViewModel
-import ru.daryasoft.fintracker.common.getViewModel
 import javax.inject.Inject
 import kotlin.math.absoluteValue
+
+private const val CURRENCY_POSITION_KEY = "currencyPosition"
+private const val ACCOUNT_POSITION_KEY = "accountPosition"
 
 /**
  * Главный фрагмент (содержащий баланс пользователя).
@@ -60,22 +62,36 @@ class BalanceFragment : DaggerFragment() {
         }
     }
 
+    private var currencyPosition: Int? = null
+    private var accountPosition: Int? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_balance, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initAccountSpinner()
+        currencyPosition = savedInstanceState?.getInt(CURRENCY_POSITION_KEY)
+        accountPosition = savedInstanceState?.getInt(ACCOUNT_POSITION_KEY)
+
         initCurrencySpinner()
+        initAccountSpinner()
     }
 
     override fun onStart() {
         super.onStart()
+
         balanceViewModel.transactionAggregateInfoList.observe(this@BalanceFragment, transactionAggregateInfoObserver)
         balanceViewModel.balance.observe(this@BalanceFragment, balanceObserver)
         balanceViewModel.currency.observe(this@BalanceFragment, currencyObserver)
         balanceViewModel.accounts.observe(this@BalanceFragment, accountObserver)
+
+        if (accountPosition != null) {
+            account_spinner.setSelection(accountPosition as Int)
+        }
+        if (currencyPosition != null) {
+            currency_spinner.setSelection(currencyPosition as Int)
+        }
     }
 
     override fun onStop() {
@@ -86,9 +102,16 @@ class BalanceFragment : DaggerFragment() {
         super.onStop()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(CURRENCY_POSITION_KEY, currency_spinner.selectedItemPosition)
+        outState.putInt(ACCOUNT_POSITION_KEY, account_spinner.selectedItemPosition)
+        super.onSaveInstanceState(outState)
+    }
+
     private fun initAccountSpinner() {
         account_spinner.adapter = CustomArrayAdapter(context, balanceViewModel.accounts.value
                 ?: listOf()) { account -> account.name }
+
         account_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
             }
@@ -101,6 +124,7 @@ class BalanceFragment : DaggerFragment() {
 
     private fun initCurrencySpinner() {
         currency_spinner.adapter = ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, Currency.values().map { it.toString() })
+
         currency_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
             }

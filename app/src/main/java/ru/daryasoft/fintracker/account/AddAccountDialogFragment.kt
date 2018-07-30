@@ -2,29 +2,38 @@ package ru.daryasoft.fintracker.account
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Currency
+import javax.inject.Inject
 
 /**
  * Диалог, который отображается при создании счета.
  */
 class AddAccountDialogFragment : DialogFragment() {
-    private lateinit var onAddAccountAction: (account: Account) -> Unit
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: AccountsViewModel by lazy { getViewModel<AccountsViewModel>(viewModelFactory) }
 
     private val dialogView by lazy { activity?.layoutInflater?.inflate(R.layout.dialog_add_account, null) }
     private val dialog by lazy {
         AlertDialog.Builder(context)
                 .setView(dialogView)
-                .setTitle("Добавить счет")
-                .setPositiveButton("OK") { _, _ -> onAddAccountAction.invoke(onAddAccount()) }
-                .setNegativeButton("Cancel") { _, _ -> }
+                .setTitle(getString(R.string.adding_account_title))
+                .setPositiveButton(getString(R.string.adding_account_positive_button_title)) { _, _ -> viewModel.onAddAccount(onAddAccount()) }
+                .setNegativeButton(getString(R.string.adding_account_negative_button_title)) { _, _ -> }
                 .create()
     }
 
@@ -48,7 +57,12 @@ class AddAccountDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = dialogView?.account_name?.text?.isNotEmpty() ?: false
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     private fun onAddAccount(): Account {
@@ -60,10 +74,6 @@ class AddAccountDialogFragment : DialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(onAddAction: (account: Account) -> Unit): AddAccountDialogFragment {
-            val onAddAccountDialogFragment = AddAccountDialogFragment()
-            onAddAccountDialogFragment.onAddAccountAction = onAddAction
-            return onAddAccountDialogFragment
-        }
+        fun newInstance() = AddAccountDialogFragment()
     }
 }
