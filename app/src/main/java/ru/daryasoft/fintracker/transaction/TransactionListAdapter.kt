@@ -28,7 +28,6 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
         holder.transactionSum.text = transaction.sum.toString()
         holder.transactionCurrency.text = transaction.account.currency.name
         holder.transactionDate.text = getDateFormat(holder.transactionDate.context).format(transaction.date)
-        holder.categoryName.text = transaction.category.name
         holder.accountName.text = transaction.account.name
     }
 
@@ -59,7 +58,6 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
         var transactionSum: TextView = itemView.transaction_sum
         var transactionCurrency: TextView = itemView.transaction_currency
         var transactionDate: TextView = itemView.transaction_date
-        var categoryName: TextView = itemView.category_name
         var accountName: TextView = itemView.account_name
 
         init {
