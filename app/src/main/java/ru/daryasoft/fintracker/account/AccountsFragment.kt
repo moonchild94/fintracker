@@ -30,6 +30,7 @@ class AccountsFragment : DaggerFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        activity?.title = getString(R.string.title_fragment_accounts)
         return inflater.inflate(R.layout.fragment_accounts, container, false)
     }
 

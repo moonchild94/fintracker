@@ -14,6 +14,7 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        activity?.title = getString(R.string.title_fragment_categories)
         return inflater.inflate(R.layout.fragment_categories, container, false)
     }
 
