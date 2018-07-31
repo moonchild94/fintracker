@@ -1,37 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:weightSum="4"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/transaction"
+    android:layout_margin="@dimen/accountMargin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_weight="1"
-        android:layout_width="@dimen/transactionColumnWidth"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/transactionTextSize"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/transactionItemPadding">
 
-    <TextView
-        android:id="@+id/sum"
-        android:layout_weight="1"
-        android:layout_width="@dimen/transactionColumnWidth"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/transactionTextSize"/>
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="@dimen/addTransactionCategoryIconSize"
+            android:layout_height="@dimen/addTransactionCategoryIconSize"
+            app:srcCompat="@drawable/ic_transport" />
 
-    <TextView
-        android:id="@+id/currency"
-        android:layout_weight="1"
-        android:layout_width="@dimen/transactionColumnWidth"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/transactionTextSize"/>
+        <ImageView
+            android:id="@+id/transaction_type"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@id/category_icon"
+            app:layout_constraintTop_toTopOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
 
-    <ImageView
-        android:id="@+id/operation_type"
-        android:layout_weight="1"
-        android:layout_width="@dimen/transactionColumnWidth"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/transactionTextSize"
-        android:contentDescription="@string/transaction_type_description" />
+        <TextView
+            android:id="@+id/transaction_sum"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@id/transaction_type"
+            app:layout_constraintTop_toTopOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            android:textSize="@dimen/addTransactionTextSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/transaction_currency"
+            app:layout_constraintStart_toEndOf="@id/transaction_sum"
+            app:layout_constraintTop_toTopOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/addTransactionTextSize" />
+
+        <TextView
+            android:id="@+id/transaction_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/category_icon"
+            app:layout_constraintBottom_toBottomOf="@id/category_icon"
+            android:textSize="@dimen/addTransactionTextSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/account_name"
+            app:layout_constraintTop_toBottomOf="@id/category_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

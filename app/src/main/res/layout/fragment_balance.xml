@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".balance.BalanceFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        tools:context=".balance.BalanceFragment">
+
+        <Spinner
+            android:id="@+id/account_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <Spinner
+            android:id="@+id/currency_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/balance_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance_title"
+        android:textSize="@dimen/balanceTextSize"
+        android:textStyle="bold"
+        android:layout_marginEnd="@dimen/balanceMargin"
+        android:gravity="center" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        tools:context=".balance.BalanceFragment">
+
+        <TextView
+            android:id="@+id/balance_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/balanceTextSize"
+            android:layout_marginEnd="@dimen/balanceMargin"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/balance_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/balanceTextSize"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/balance_diagram"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">FinTracker</string>
 
-    <string name="title_fragment_main">Main</string>
+    <string name="title_fragment_balance">Main</string>
     <string name="title_fragment_operation">Transactions</string>
     <string name="title_fragment_settings">Settings</string>
+    <string name="title_fragment_add_transaction">Operation adding</string>
+    <string name="title_fragment_accounts">Accounts</string>
+    <string name="title_fragment_categories">Categories</string>
 
-    <string name="title_settings_menu_item">settings</string>
+    <string name="title_main_page_menu_item">Main</string>
+    <string name="title_accounts_menu_item">Accounts</string>
+    <string name="title_categories_menu_item">Categories</string>
+    <string name="title_settings_menu_item">Settings</string>
     <string name="title_back_menu_item">back</string>
 
     <string name="about">About</string>
@@ -18,11 +24,28 @@
     <string name="app_icon_description">Application icon</string>
     <string name="transaction_type_description">Transaction type</string>
 
-    <string name="balance_title">Your balance</string>
+    <string name="balance_title">Balance</string>
 
     <string name="author">© Darya Kalmykova</string>
     <string name="version">Version 0.0.1</string>
 
     <string name="usd">USD</string>
     <string name="rub">RUB</string>
+
+    <string name="adding_account_title">Add account</string>
+    <string name="adding_account_name">Name</string>
+    <string name="adding_account_start_balance">Start balance</string>
+    <string name="adding_account_positive_button_title">OK</string>
+    <string name="adding_account_negative_button_title">Cancel</string>
+    <string name="adding_account_start_balance_value">0.0</string>
+
+    <string name="add_transaction_button_ok_text">OK</string>
+    <string name="add_transaction_type">Operation type</string>
+    <string name="add_transaction_type_input">Income</string>
+    <string name="add_transaction_type_output">Outcome</string>
+    <string name="add_transaction_date_title">Date</string>
+    <string name="add_transaction_category_title">Category</string>
+    <string name="add_transaction_account_title">Account</string>
+    <string name="add_transaction_amount_title">Operation amount</string>
+
 </resources>

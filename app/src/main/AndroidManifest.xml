@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.daryasoft.fintracker">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_attach_money_black_24dp"
@@ -10,14 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".initialization.FinTrackerApplication">
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".main.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SettingsActivity" />
     </application>
 
 </manifest>

@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">FinTracker</string>
 
-    <string name="title_fragment_main">Главная</string>
+    <string name="title_fragment_balance">Главная</string>
     <string name="title_fragment_operation">Операции</string>
     <string name="title_fragment_settings">Настройки</string>
+    <string name="title_fragment_accounts">Счета</string>
+    <string name="title_fragment_categories">Категории</string>
+    <string name="title_fragment_add_transaction">Добавление операции</string>
 
-    <string name="title_settings_menu_item">настройки</string>
+    <string name="title_main_page_menu_item">Главная</string>
+    <string name="title_accounts_menu_item">Счета</string>
+    <string name="title_categories_menu_item">Категории</string>
+    <string name="title_settings_menu_item">Настройки</string>
     <string name="title_back_menu_item">назад</string>
 
     <string name="about">О приложении</string>
@@ -18,12 +24,28 @@
     <string name="app_icon_description">Иконка приложения</string>
     <string name="transaction_type_description">Тип транзакции</string>
 
-    <string name="balance_title">Ваш баланс</string>
+    <string name="balance_title">Баланс</string>
 
     <string name="author">© Дарья Калмыкова</string>
     <string name="version">Версия 0.0.1</string>
 
     <string name="usd">USD</string>
     <string name="rub">RUB</string>
+
+    <string name="adding_account_title">Добавить счет</string>
+    <string name="adding_account_name">Название</string>
+    <string name="adding_account_start_balance">Начальный баланс</string>
+    <string name="adding_account_positive_button_title">ОК</string>
+    <string name="adding_account_negative_button_title">Отмена</string>
+    <string name="adding_account_start_balance_value">0.0</string>
+
+    <string name="add_transaction_button_ok_text">ОК</string>
+    <string name="add_transaction_type">Тип операции</string>
+    <string name="add_transaction_type_input">Доход</string>
+    <string name="add_transaction_type_output">Расход</string>
+    <string name="add_transaction_date_title">Дата</string>
+    <string name="add_transaction_category_title">Категория</string>
+    <string name="add_transaction_account_title">Счет</string>
+    <string name="add_transaction_amount_title">Сумма операции</string>
 
 </resources>

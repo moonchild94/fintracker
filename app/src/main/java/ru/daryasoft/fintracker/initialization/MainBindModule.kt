@@ -4,47 +4,65 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import ru.daryasoft.fintracker.ui.MainActivity
-import ru.daryasoft.fintracker.ui.MainFragment
+import ru.daryasoft.fintracker.main.MainActivity
+import ru.daryasoft.fintracker.balance.BalanceFragment
 import javax.inject.Singleton
 import dagger.Binds
 import dagger.multibindings.IntoMap
-import ru.daryasoft.fintracker.calculator.FinCalculator
-import ru.daryasoft.fintracker.calculator.IFinCalculator
-import ru.daryasoft.fintracker.repository.TransactionRepositoryImpl
-import ru.daryasoft.fintracker.repository.TransactionRepository
-import ru.daryasoft.fintracker.repository.CurrencyRepository
-import ru.daryasoft.fintracker.repository.CurrencyRepositoryImpl
-import ru.daryasoft.fintracker.ui.TransactionsFragment
-import ru.daryasoft.fintracker.viewmodel.BalanceViewModel
-import ru.daryasoft.fintracker.viewmodel.TransactionsViewModel
-import ru.daryasoft.fintracker.viewmodel.ViewModelFactory
+import ru.daryasoft.fintracker.account.*
+import ru.daryasoft.fintracker.calculator.TransactionCalculationServiceImpl
+import ru.daryasoft.fintracker.calculator.TransactionCalculationService
+import ru.daryasoft.fintracker.rate.*
+import ru.daryasoft.fintracker.balance.BalanceViewModel
+import ru.daryasoft.fintracker.category.CategoriesViewModel
+import ru.daryasoft.fintracker.category.CategoryRepository
+import ru.daryasoft.fintracker.category.CategoryRepositoryImpl
+import ru.daryasoft.fintracker.common.ViewModelFactory
+import ru.daryasoft.fintracker.transaction.*
 
 /**
  * Dagger-модуль с поставщиками зависимостей.
  */
 @Module
 interface MainBindModule {
+
     @ContributesAndroidInjector
     fun contributeMainActivityInjector(): MainActivity
 
     @ContributesAndroidInjector
-    fun contributeMainFragmentInjector(): MainFragment
+    fun contributeMainFragmentInjector(): BalanceFragment
 
     @ContributesAndroidInjector
     fun contributeTransactionsFragmentInjector(): TransactionsFragment
 
-    @Binds
-    @Singleton
-    fun bindFinCalculator(finCalculator: FinCalculator): IFinCalculator
+    @ContributesAndroidInjector
+    fun contributeAccountsFragmentInjector(): AccountsFragment
+
+    @ContributesAndroidInjector
+    fun contributeAddTransactionFragmentInjector(): AddTransactionFragment
+
+    @ContributesAndroidInjector
+    fun contributeAddAccountDialogFragmentInjector(): AddAccountDialogFragment
 
     @Binds
     @Singleton
-    fun bindTransactionRepository(TransactionRepository: TransactionRepositoryImpl): TransactionRepository
+    fun bindFinCalculator(transactionCalculationServiceImpl: TransactionCalculationServiceImpl): TransactionCalculationService
 
     @Binds
     @Singleton
-    fun bindRateRepository(rateRepository: CurrencyRepositoryImpl): CurrencyRepository
+    fun bindTransactionRepository(transactionRepository: TransactionRepositoryImpl): TransactionRepository
+
+    @Binds
+    @Singleton
+    fun bindAccountRepository(accountRepository: AccountRepositoryImpl): AccountRepository
+
+    @Binds
+    @Singleton
+    fun bindRateRepository(rateRepository: RateRepositoryImpl): RateRepository
+
+    @Binds
+    @Singleton
+    fun bindCategoryRepository(categoryRepository: CategoryRepositoryImpl): CategoryRepository
 
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
@@ -58,4 +76,14 @@ interface MainBindModule {
     @IntoMap
     @ViewModelKey(TransactionsViewModel::class)
     fun postTransactionsViewModel(viewModel: TransactionsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AccountsViewModel::class)
+    fun postAccountsViewModel(viewModel: AccountsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CategoriesViewModel::class)
+    fun postCategoriesViewModel(viewModel: CategoriesViewModel): ViewModel
 }
