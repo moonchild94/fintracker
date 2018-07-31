@@ -67,17 +67,24 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initTransactionTypeSwitcher() {
-        adding_transaction_type.setOnCheckedChangeListener { _, isChecked ->
-            category_spinner.adapter = CustomArrayAdapter(context,
-                    categoriesViewModel.getCategoriesByType(
-                            if (isChecked) TransactionType.INCOME else TransactionType.OUTCOME).value
-                            ?: listOf())
-            { category -> category.name }
+        transaction_type_spinner.adapter = CustomArrayAdapter(context,
+                TransactionType.values().toList()) { transactionType -> getString(transactionType.resId) }
+
+        transaction_type_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(adapter: AdapterView<*>) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                category_spinner.adapter = CustomArrayAdapter(context,
+                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
+                                ?: listOf())
+                { category -> category.name }
+            }
         }
     }
 
     private fun initTransactionDateSelector() {
-        transaction_date.text = DateFormat.getDateFormat(context).format(Date())
+        transaction_date_selector.text = DateFormat.getDateFormat(context).format(Date())
 
         transaction_date_selector.setOnClickListener {
             val currentDate = Calendar.getInstance()
@@ -87,7 +94,7 @@ class AddTransactionFragment : DaggerFragment() {
                         date.set(Calendar.YEAR, year)
                         date.set(Calendar.MONTH, month)
                         date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                        transaction_date.text = DateFormat.getDateFormat(context).format(date.time)
+                        transaction_date_selector.text = DateFormat.getDateFormat(context).format(date.time)
                     },
                     currentDate.get(Calendar.YEAR),
                     currentDate.get(Calendar.MONTH),

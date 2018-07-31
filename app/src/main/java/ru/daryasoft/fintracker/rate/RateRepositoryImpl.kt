@@ -14,7 +14,7 @@ class RateRepositoryImpl @Inject constructor() : RateRepository {
     private val rates = MutableLiveData<Map<Currency, Rate>>()
 
     override fun onRatesUpdate(newRates: List<Rate>) {
-        rates.value = newRates.map { it.currency to it }.toMap()
+        rates.postValue(newRates.map { it.currency to it }.toMap())
     }
 
     override fun getRateToDefault(currency: Currency): Double {
