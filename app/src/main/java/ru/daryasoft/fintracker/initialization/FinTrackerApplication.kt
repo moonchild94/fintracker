@@ -30,6 +30,7 @@ class FinTrackerApplication : DaggerApplication(), HasActivityInjector, HasSuppo
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
+        //todo проверять, что ранее не загружены
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(RateWorker::class.java)
                 .setConstraints(constraints)
                 .build()
