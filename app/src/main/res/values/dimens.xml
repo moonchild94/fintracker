@@ -25,7 +25,7 @@
     <dimen name="addTransactionButtonMargin">16dp</dimen>
 
     <dimen name="transactionItemPadding">5dp</dimen>
-    <dimen name="addTransactionCategoryIconSize">60dp</dimen>
+    <dimen name="addTransactionCategoryIconSize">45dp</dimen>
     <dimen name="addTransactionTextSize">20sp</dimen>
     <dimen name="addTransactionContainerPadding">10dp</dimen>
     <dimen name="addTransactionMargin">20dp</dimen>

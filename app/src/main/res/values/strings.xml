@@ -32,6 +32,9 @@
     <string name="usd">USD</string>
     <string name="rub">RUB</string>
 
+    <string name="income">Доход</string>
+    <string name="outcome">Расход</string>
+
     <string name="adding_account_title">Добавить счет</string>
     <string name="adding_account_name">Название</string>
     <string name="adding_account_start_balance">Начальный баланс</string>

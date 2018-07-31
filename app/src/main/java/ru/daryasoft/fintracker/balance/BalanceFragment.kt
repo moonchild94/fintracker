@@ -25,9 +25,6 @@ import ru.daryasoft.fintracker.entity.TransactionAggregateInfo
 import javax.inject.Inject
 import kotlin.math.absoluteValue
 
-private const val CURRENCY_POSITION_KEY = "currencyPosition"
-private const val ACCOUNT_POSITION_KEY = "accountPosition"
-
 /**
  * Главный фрагмент (содержащий баланс пользователя).
  */
@@ -55,7 +52,14 @@ class BalanceFragment : DaggerFragment() {
         Observer<List<TransactionAggregateInfo>> { initPieChart(it ?: listOf()) }
     }
 
-    private val accountObserver: Observer<List<Account>> by lazy {
+    private val accountObserver: Observer<Account> by lazy {
+        Observer<Account> {
+            account_spinner.setSelection(balanceViewModel.accounts.value?.indexOf(balanceViewModel.account.value)
+                    ?: 0)
+        }
+    }
+
+    private val accountsObserver: Observer<List<Account>> by lazy {
         Observer<List<Account>> {
             account_spinner.adapter = CustomArrayAdapter(context, balanceViewModel.accounts.value
                     ?: listOf()) { account -> account.name }
@@ -71,9 +75,6 @@ class BalanceFragment : DaggerFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        currencyPosition = savedInstanceState?.getInt(CURRENCY_POSITION_KEY)
-        accountPosition = savedInstanceState?.getInt(ACCOUNT_POSITION_KEY)
-
         initCurrencySpinner()
         initAccountSpinner()
     }
@@ -84,28 +85,18 @@ class BalanceFragment : DaggerFragment() {
         balanceViewModel.transactionAggregateInfoList.observe(this@BalanceFragment, transactionAggregateInfoObserver)
         balanceViewModel.balance.observe(this@BalanceFragment, balanceObserver)
         balanceViewModel.currency.observe(this@BalanceFragment, currencyObserver)
-        balanceViewModel.accounts.observe(this@BalanceFragment, accountObserver)
-
-        if (accountPosition != null) {
-            account_spinner.setSelection(accountPosition as Int)
-        }
-        if (currencyPosition != null) {
-            currency_spinner.setSelection(currencyPosition as Int)
-        }
+        balanceViewModel.accounts.observe(this@BalanceFragment, accountsObserver)
+        balanceViewModel.account.observe(this@BalanceFragment, accountObserver)
     }
 
     override fun onStop() {
         balanceViewModel.transactionAggregateInfoList.removeObserver(transactionAggregateInfoObserver)
         balanceViewModel.balance.removeObserver(balanceObserver)
         balanceViewModel.currency.removeObserver(currencyObserver)
-        balanceViewModel.accounts.removeObserver(accountObserver)
-        super.onStop()
-    }
+        balanceViewModel.accounts.removeObserver(accountsObserver)
+        balanceViewModel.account.removeObserver(accountObserver)
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(CURRENCY_POSITION_KEY, currency_spinner.selectedItemPosition)
-        outState.putInt(ACCOUNT_POSITION_KEY, account_spinner.selectedItemPosition)
-        super.onSaveInstanceState(outState)
+        super.onStop()
     }
 
     private fun initAccountSpinner() {

@@ -23,7 +23,7 @@ class RateWorker : Worker() {
         }
 
         val rates = rateNetworkDataSource.getRates().execute().body() ?: listOf()
-        launch(UI) { rateRepository.onRatesUpdate(rates) }
+        rateRepository.onRatesUpdate(rates)
 
         return Result.SUCCESS
     }
