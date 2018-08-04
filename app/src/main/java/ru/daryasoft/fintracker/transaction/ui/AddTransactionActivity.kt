@@ -33,12 +33,11 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
     private val categoriesViewModel: CategoriesViewModel by lazy { getViewModel<CategoriesViewModel>(viewModelFactory) }
     private val accountsViewModel: AccountsViewModel by lazy { getViewModel<AccountsViewModel>(viewModelFactory) }
 
-    private var addTransactionListener: AddTransactionListener? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaction)
+        title = getString(R.string.title_fragment_add_transaction)
 
         val supportActionBar = supportActionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -64,12 +63,12 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                category_spinner.adapter = CustomArrayAdapter(this,
-//                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
-//                                ?: listOf())
-//                { category -> category.name }
-//
-//                category_spinner.adapter = CustomArrayAdapter(this, )
+                category_spinner.adapter = CustomArrayAdapter(applicationContext,
+                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
+                                ?: listOf()
+                ) { category -> category.name }
+
+
             }
         }
     }
