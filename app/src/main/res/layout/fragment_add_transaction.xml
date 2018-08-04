@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/addTransactionContainerPadding"
-    tools:context=".transaction.AddTransactionFragment">
+    tools:context=".transaction.ui.AddTransactionFragment">
 
     <TextView
         android:id="@+id/transaction_date_title"

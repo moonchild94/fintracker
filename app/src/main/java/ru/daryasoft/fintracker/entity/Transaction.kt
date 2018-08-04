@@ -5,4 +5,4 @@ import java.util.*
 /**
  * Финансовая транзакция.
  */
-data class Transaction(val account: Account, val sum: Double, val date: Date, val category: Category)
+data class Transaction(val account: Account, val sum: Money, val date: Date, val category: Category)

@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.transaction.adapter
 
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
@@ -6,10 +6,9 @@ import android.text.format.DateFormat.getDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.transaction_item.view.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.common.LocaleUtils
 import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
 
@@ -22,13 +21,7 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val transaction = transactions[position]
-        val uri = Uri.parse("android.resource://ru.daryasoft.fintracker/drawable/" + transaction.category.iconUri)
-        holder.categoryIcon.setImageURI(uri)
-        holder.transactionType.setImageDrawable(holder.transactionType.context.resources.getDrawable(getIconForTransactionType(transaction.category.transactionType)))
-        holder.transactionSum.text = transaction.sum.toString()
-        holder.transactionCurrency.text = transaction.account.currency.name
-        holder.transactionDate.text = getDateFormat(holder.transactionDate.context).format(transaction.date)
-        holder.accountName.text = transaction.account.name
+        holder.setData(transaction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,28 +35,33 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
 
     fun setData(changedTransactions: List<Transaction>) {
         transactions = changedTransactions
-        notifyDataSetChanged()
-    }
-
-    private fun getIconForTransactionType(transactionType: TransactionType): Int {
-        return when (transactionType) {
-            TransactionType.OUTCOME -> R.drawable.ic_chevron_left_black_24dp
-            TransactionType.INCOME -> R.drawable.ic_chevron_right_black_24dp
-        }
+        notifyDataSetChanged() //Добавить DiffUtil
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var categoryIcon: ImageView = itemView.category_icon
-        var transactionType: ImageView = itemView.transaction_type
-        var transactionSum: TextView = itemView.transaction_sum
-        var transactionCurrency: TextView = itemView.transaction_currency
-        var transactionDate: TextView = itemView.transaction_date
-        var accountName: TextView = itemView.account_name
-
+        val localeUtils = LocaleUtils(itemView.context)
         init {
             itemView.setOnLongClickListener {
                 onDeleteAction.invoke(adapterPosition)
                 true
+            }
+        }
+
+        fun setData(transaction: Transaction) {
+            val uri = Uri.parse("android.resource://ru.daryasoft.fintracker/drawable/" + transaction.category.iconUri)
+
+            itemView.category_icon.setImageURI(uri)
+            itemView.transaction_type.setImageDrawable(itemView.context.resources.getDrawable(getIconForTransactionType(transaction.category.transactionType)))
+            itemView.transaction_sum.text = localeUtils.formatBigDecimal( transaction.sum.value)
+            itemView.transaction_currency.text =  localeUtils.formatCurrency(transaction.account.money.currency)
+            itemView.transaction_date.text = getDateFormat(itemView.context).format(transaction.date)
+            itemView.transaction_date.text = transaction.account.name
+        }
+
+        private fun getIconForTransactionType(transactionType: TransactionType): Int {
+            return when (transactionType) {
+                TransactionType.OUTCOME -> R.drawable.ic_chevron_left_black_24dp
+                TransactionType.INCOME -> R.drawable.ic_chevron_right_black_24dp
             }
         }
     }

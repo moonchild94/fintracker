@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.transaction.data
 
 import android.arch.lifecycle.LiveData
 import ru.daryasoft.fintracker.entity.Account

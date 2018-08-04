@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import kotlinx.android.synthetic.main.account_item.view.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.common.LocaleUtils
 import ru.daryasoft.fintracker.entity.Account
 
 /**
@@ -15,10 +15,10 @@ import ru.daryasoft.fintracker.entity.Account
 class AccountListAdapter(private var accounts: List<Account>,
                          private val onDeleteAction: (position: Int) -> Unit) : RecyclerView.Adapter<AccountListAdapter.ViewHolder>() {
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = accounts[position].name
-        holder.amount.text = accounts[position].amount.toString()
-        holder.currency.text = accounts[position].currency.toString()
+
+            holder.setData(accounts[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,10 +35,14 @@ class AccountListAdapter(private var accounts: List<Account>,
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.accountName
-        val amount: TextView = itemView.accountBalance
-        val currency: TextView = itemView.accountCurrency
 
+
+        val localeUtils = LocaleUtils(itemView.context)
+        fun setData(account: Account){
+            itemView.accountName.text = account.name
+            itemView.accountBalance.text = localeUtils.formatBigDecimal(account.money.value)
+            itemView.accountCurrency.text = localeUtils.formatCurrency(account.money.currency)
+        }
         init {
             itemView.setOnLongClickListener {
                 onDeleteAction.invoke(adapterPosition)

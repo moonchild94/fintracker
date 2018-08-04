@@ -1,7 +1,8 @@
 package ru.daryasoft.fintracker.calculator
 
 import ru.daryasoft.fintracker.entity.*
-import ru.daryasoft.fintracker.transaction.TransactionRepository
+import ru.daryasoft.fintracker.transaction.data.TransactionRepository
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -12,12 +13,12 @@ class TransactionCalculationServiceImpl @Inject constructor(private val transact
         val result = mutableListOf<TransactionAggregateInfo>()
 
         for (category in categories) {
-            var sum = 0.00
+            var sum = BigDecimal.ZERO
             val transactions = transactionRepository.query(category, account).value
             for (transaction in transactions ?: listOf()) {
-                sum += (if (transaction.category.transactionType == TransactionType.INCOME) transaction.sum else -transaction.sum)
+                sum = sum.add (if (transaction.category.transactionType == TransactionType.INCOME) transaction.sum.value else -transaction.sum.value)
             }
-            result.add(TransactionAggregateInfo(targetCurrency, sum, category))
+            result.add(TransactionAggregateInfo(Money(sum, targetCurrency), category))
         }
 
         return result

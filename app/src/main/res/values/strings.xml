@@ -50,5 +50,6 @@
     <string name="add_transaction_category_title">Категория</string>
     <string name="add_transaction_account_title">Счет</string>
     <string name="add_transaction_amount_title">Сумма операции</string>
+    <string name="title_request_delete_item_transaction">\"Вы действительно хотите удалить операцию?\"</string>
 
 </resources>

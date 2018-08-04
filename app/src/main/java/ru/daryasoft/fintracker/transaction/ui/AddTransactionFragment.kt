@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.transaction.ui
 
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProvider
@@ -19,10 +19,8 @@ import ru.daryasoft.fintracker.category.CategoriesViewModel
 import ru.daryasoft.fintracker.common.CustomArrayAdapter
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.common.hideKeyboard
-import ru.daryasoft.fintracker.entity.Account
-import ru.daryasoft.fintracker.entity.Category
-import ru.daryasoft.fintracker.entity.Transaction
-import ru.daryasoft.fintracker.entity.TransactionType
+import ru.daryasoft.fintracker.entity.*
+import ru.daryasoft.fintracker.transaction.viewModel.TransactionsViewModel
 import java.util.*
 import javax.inject.Inject
 
@@ -111,7 +109,7 @@ class AddTransactionFragment : DaggerFragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                transaction_currency.text = (transaction_account_spinner.selectedItem as Account).currency.name
+                transaction_currency.text = (transaction_account_spinner.selectedItem as Account).money.currency.name
             }
         }
     }
@@ -140,7 +138,7 @@ class AddTransactionFragment : DaggerFragment() {
             val transactionSum = transaction_amount.text.toString().toDouble()
             val date = Date()
             val category = category_spinner.selectedItem as Category
-            val transaction = Transaction(account, transactionSum, date, category)
+            val transaction = Transaction(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category)
             transactionsViewModel.onAddTransaction(transaction)
             addTransactionListener?.onAddTransactionComplete()
             hideKeyboard(transaction_amount)

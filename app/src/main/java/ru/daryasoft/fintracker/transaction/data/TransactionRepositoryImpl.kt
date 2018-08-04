@@ -1,13 +1,11 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.transaction.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import ru.daryasoft.fintracker.account.AccountRepository
-import ru.daryasoft.fintracker.entity.Account
-import ru.daryasoft.fintracker.entity.Category
-import ru.daryasoft.fintracker.entity.Transaction
-import ru.daryasoft.fintracker.entity.TransactionType
 import ru.daryasoft.fintracker.category.CategoryRepository
+import ru.daryasoft.fintracker.entity.*
+import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,15 +26,15 @@ class TransactionRepositoryImpl @Inject constructor(accountRepository: AccountRe
             val accountsForGet = accounts.value as List<Account>
             val categoriesForGet = categories.value as List<Category>
             transactions.value = listOf(
-                    Transaction(accountsForGet[0], 10000.00, Date(), categoriesForGet[0]),
-                    Transaction(accountsForGet[1], 1000.00, Date(), categoriesForGet[1]),
-                    Transaction(accountsForGet[2], 1000.00, Date(), categoriesForGet[2]),
-                    Transaction(accountsForGet[0], 1000.00, Date(), categoriesForGet[3]),
-                    Transaction(accountsForGet[0], 2000.00, Date(), categoriesForGet[3]),
-                    Transaction(accountsForGet[0], 3000.00, Date(), categoriesForGet[3]),
-                    Transaction(accountsForGet[0], 1000.00, Date(), categoriesForGet[2]),
-                    Transaction(accountsForGet[0], 200.00, Date(), categoriesForGet[2]),
-                    Transaction(accountsForGet[1], 1000.00, Date(), categoriesForGet[0]))
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(10000.00), accountsForGet[0].money.currency), Date(), categoriesForGet[0]),
+                    Transaction(accountsForGet[1], Money(BigDecimal.valueOf(1000.00), accountsForGet[1].money.currency), Date(), categoriesForGet[1]),
+                    Transaction(accountsForGet[2], Money(BigDecimal.valueOf(1000.00), accountsForGet[2].money.currency), Date(), categoriesForGet[2]),
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(1000.00), accountsForGet[0].money.currency), Date(), categoriesForGet[3]),
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(2000.00), accountsForGet[0].money.currency), Date(), categoriesForGet[3]),
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(3000.00), accountsForGet[0].money.currency), Date(), categoriesForGet[3]),
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(1000.00), accountsForGet[0].money.currency), Date(), categoriesForGet[2]),
+                    Transaction(accountsForGet[0], Money(BigDecimal.valueOf(200.00), accountsForGet[0].money.currency), Date(), categoriesForGet[2]),
+                    Transaction(accountsForGet[1], Money(BigDecimal.valueOf(1000.00), accountsForGet[1].money.currency), Date(), categoriesForGet[0]))
         }
     }
 
@@ -56,8 +54,8 @@ class TransactionRepositoryImpl @Inject constructor(accountRepository: AccountRe
         mutableList?.add(transaction)
         transactions.value = mutableList
 
-        transaction.account.amount += if (transaction.category.transactionType == TransactionType.INCOME)
-            transaction.sum else -transaction.sum
+        transaction.account.money.value.add( if (transaction.category.transactionType == TransactionType.INCOME)
+           transaction.sum.value else -transaction.sum.value)
     }
 
     override fun delete(transaction: Transaction) {

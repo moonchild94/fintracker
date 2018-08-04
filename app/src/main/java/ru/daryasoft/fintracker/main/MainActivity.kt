@@ -11,8 +11,8 @@ import ru.daryasoft.fintracker.account.AccountsFragment
 import ru.daryasoft.fintracker.category.CategoriesFragment
 import ru.daryasoft.fintracker.common.replaceFragment
 import ru.daryasoft.fintracker.settings.SettingsFragment
-import ru.daryasoft.fintracker.transaction.AddTransactionFragment
-import ru.daryasoft.fintracker.transaction.AddTransactionListener
+import ru.daryasoft.fintracker.transaction.ui.AddTransactionFragment
+import ru.daryasoft.fintracker.transaction.ui.AddTransactionListener
 
 class MainActivity : DaggerAppCompatActivity(), AddTransactionListener {
 

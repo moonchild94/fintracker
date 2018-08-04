@@ -1,24 +1,37 @@
-package ru.daryasoft.fintracker.transaction
+package ru.daryasoft.fintracker.transaction.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.daryasoft.fintracker.R
-import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.common.getViewModel
+import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.transaction.adapter.TransactionItemTouchHelper
+import ru.daryasoft.fintracker.transaction.adapter.TransactionListAdapter
+import ru.daryasoft.fintracker.transaction.viewModel.TransactionsViewModel
 import javax.inject.Inject
+
 
 /**
  * Фрагмент для списка транзакций.
  */
-class TransactionsFragment : DaggerFragment() {
+class TransactionsFragment : DaggerFragment(), DeleteTransactionDialogFragment.INoticeDialogListener {
+    override fun onDialogOk() {
+        viewModel.onConfirmDeleteTransaction()
+    }
+
+    override fun onDialogCancel() {
+        viewModel.onCancelDeleteTransaction()
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -26,9 +39,16 @@ class TransactionsFragment : DaggerFragment() {
     private val observer: Observer<List<Transaction>> by lazy {
         Observer<List<Transaction>> { list -> transactionListAdapter.setData(list ?: listOf()) }
     }
+    private val observerCancelDelete: Observer<Int> by lazy {
+        Observer<Int> { it -> it?.let { transactionListAdapter.notifyItemChanged(it) } }
+    }
+
+
 
     private val transactionListAdapter = TransactionListAdapter(listOf()) { position -> onDeleteTransaction(position) }
     private var addTransactionListener: AddTransactionListener? = null
+
+    private val itemTouchHelper = ItemTouchHelper(TransactionItemTouchHelper(0, ItemTouchHelper.LEFT) { position -> onDeleteTransaction(position) })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,6 +60,7 @@ class TransactionsFragment : DaggerFragment() {
 
         transaction_list.layoutManager = LinearLayoutManager(context)
         transaction_list.adapter = transactionListAdapter
+        itemTouchHelper.attachToRecyclerView(transaction_list)
 
         add_transaction.setOnClickListener { addTransactionListener?.onAddTransactionOpen() }
     }
@@ -47,10 +68,17 @@ class TransactionsFragment : DaggerFragment() {
     override fun onStart() {
         super.onStart()
         viewModel.transactions.observe(this, observer)
+        viewModel.positionCancelDelete.observe(this, observerCancelDelete)
+
+        viewModel.showDialogDelete.observe(this, Observer {
+            showDialogDelete()
+        })
+
     }
 
     override fun onStop() {
         viewModel.transactions.removeObserver(observer)
+        viewModel.positionCancelDelete.removeObserver(observerCancelDelete)
         super.onStop()
     }
 
@@ -67,13 +95,20 @@ class TransactionsFragment : DaggerFragment() {
         super.onDetach()
     }
 
+    private fun showDialogDelete() {
+        val dialog = DeleteTransactionDialogFragment()
+        dialog.setTargetFragment(this, 0)
+        dialog.show(fragmentManager, TAG_DIALOG_DELETE)
+    }
+
     private fun onDeleteTransaction(position: Int) {
-        DeleteTransactionDialogFragment.newInstance { viewModel.onDeleteTransaction(position) }
-                .show(fragmentManager, "DeleteTransactionDialogFragment")
+        viewModel.onDeleteTransaction(position)
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = TransactionsFragment()
+
+        const val TAG_DIALOG_DELETE: String = "DeleteTransactionDialogFragment"
     }
 }

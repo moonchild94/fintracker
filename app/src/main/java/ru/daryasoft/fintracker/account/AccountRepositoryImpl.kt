@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.entity.Money
+import java.math.BigDecimal
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,9 +19,9 @@ class AccountRepositoryImpl @Inject constructor() : AccountRepository {
 
     init {
         accounts.value = mutableListOf(
-                Account("Наличные руб", 600.00, Currency.RUB),
-                Account("Карта руб", 1600.00, Currency.RUB),
-                Account("Карта доллары", 20600.00, Currency.USD))
+                Account("Наличные руб", Money(BigDecimal.valueOf(600.00), Currency.RUB)),
+                Account("Карта руб", Money(BigDecimal.valueOf(1600.00), Currency.RUB)),
+                Account("Карта доллары", Money(BigDecimal.valueOf(20600.00), Currency.USD)))
     }
 
     override fun getAll(): LiveData<List<Account>> {

@@ -15,6 +15,8 @@ import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.entity.Money
+import java.math.BigDecimal
 import javax.inject.Inject
 
 /**
@@ -69,7 +71,7 @@ class AddAccountDialogFragment : DialogFragment() {
         val accountName = dialogView?.account_name?.text.toString()
         val startAmount = dialogView?.account_start_amount?.text.toString()
         val currency = dialogView?.account_currency_spinner?.selectedItem as Currency
-        return Account(accountName, if (startAmount.isEmpty()) 0.0 else startAmount.toDouble(), currency)
+        return Account(accountName, Money(if (startAmount.isEmpty()) BigDecimal.ZERO else startAmount.toBigDecimal(), currency))
     }
 
     companion object {
