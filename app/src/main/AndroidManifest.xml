@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".initialization.FinTrackerApplication">
+        android:name=".initialization.FinTrackerApplication"
+        android:fullBackupContent="true">
         <activity android:name=".main.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -20,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".transaction.ui.AddTransactionActivity" />
+        <activity android:name=".category.CategoriesActivity" />
+        <activity android:name=".account.AccountsActivity" />
     </application>
 
 </manifest>

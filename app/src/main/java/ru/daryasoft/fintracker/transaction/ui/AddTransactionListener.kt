@@ -10,8 +10,5 @@ interface AddTransactionListener {
      */
     fun onAddTransactionOpen()
 
-    /**
-     * Реакция на событие успешного добавления транзакции.
-     */
-    fun onAddTransactionComplete()
+
 }

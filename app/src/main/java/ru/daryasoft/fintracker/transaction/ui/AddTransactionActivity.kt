@@ -2,17 +2,14 @@ package ru.daryasoft.fintracker.transaction.ui
 
 import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProvider
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_add_transaction.*
+import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_add_transaction.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.account.AccountsViewModel
 import ru.daryasoft.fintracker.category.CategoriesViewModel
@@ -27,7 +24,7 @@ import javax.inject.Inject
 /**
  * Фрагмент, который отображается при создании счета.
  */
-class AddTransactionFragment : DaggerFragment() {
+class AddTransactionActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -38,12 +35,14 @@ class AddTransactionFragment : DaggerFragment() {
 
     private var addTransactionListener: AddTransactionListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.title = getString(R.string.title_fragment_add_transaction)
-        return layoutInflater.inflate(R.layout.fragment_add_transaction, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add_transaction)
+
+        val supportActionBar = supportActionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         initTransactionTypeSwitcher()
         initTransactionDateSelector()
         initAccountSpinner()
@@ -51,21 +50,13 @@ class AddTransactionFragment : DaggerFragment() {
         initOkButton()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context !is AddTransactionListener) {
-            throw IllegalArgumentException()
-        }
-        addTransactionListener = context
-    }
-
-    override fun onDetach() {
-        addTransactionListener = null
-        super.onDetach()
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun initTransactionTypeSwitcher() {
-        transaction_type_spinner.adapter = CustomArrayAdapter(context,
+        transaction_type_spinner.adapter = CustomArrayAdapter(this,
                 TransactionType.values().toList()) { transactionType -> getString(transactionType.resId) }
 
         transaction_type_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -73,26 +64,28 @@ class AddTransactionFragment : DaggerFragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                category_spinner.adapter = CustomArrayAdapter(context,
-                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
-                                ?: listOf())
-                { category -> category.name }
+//                category_spinner.adapter = CustomArrayAdapter(this,
+//                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
+//                                ?: listOf())
+//                { category -> category.name }
+//
+//                category_spinner.adapter = CustomArrayAdapter(this, )
             }
         }
     }
 
     private fun initTransactionDateSelector() {
-        transaction_date_selector.text = DateFormat.getDateFormat(context).format(Date())
+        transaction_date_selector.text = DateFormat.getDateFormat(this).format(Date())
 
         transaction_date_selector.setOnClickListener {
             val currentDate = Calendar.getInstance()
-            DatePickerDialog(activity,
+            DatePickerDialog(this,
                     DatePickerDialog.OnDateSetListener { p0, year, month, dayOfMonth ->
                         val date = Calendar.getInstance()
                         date.set(Calendar.YEAR, year)
                         date.set(Calendar.MONTH, month)
                         date.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                        transaction_date_selector.text = DateFormat.getDateFormat(context).format(date.time)
+                        transaction_date_selector.text = DateFormat.getDateFormat(this).format(date.time)
                     },
                     currentDate.get(Calendar.YEAR),
                     currentDate.get(Calendar.MONTH),
@@ -102,7 +95,7 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initAccountSpinner() {
-        transaction_account_spinner.adapter = CustomArrayAdapter(context, accountsViewModel.accounts.value
+        transaction_account_spinner.adapter = CustomArrayAdapter(this, accountsViewModel.accounts.value
                 ?: listOf()) { account -> account.name }
         transaction_account_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
@@ -115,7 +108,7 @@ class AddTransactionFragment : DaggerFragment() {
     }
 
     private fun initCategorySpinner() {
-        category_spinner.adapter = CustomArrayAdapter(context,
+        category_spinner.adapter = CustomArrayAdapter(this,
                 categoriesViewModel.getCategoriesByType(TransactionType.OUTCOME).value ?: listOf())
         { category -> category.name }
     }
@@ -140,13 +133,13 @@ class AddTransactionFragment : DaggerFragment() {
             val category = category_spinner.selectedItem as Category
             val transaction = Transaction(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category)
             transactionsViewModel.onAddTransaction(transaction)
-            addTransactionListener?.onAddTransactionComplete()
             hideKeyboard(transaction_amount)
+            onBackPressed()
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(): AddTransactionFragment = AddTransactionFragment()
+        fun newInstance(): AddTransactionActivity = AddTransactionActivity()
     }
 }

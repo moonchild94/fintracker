@@ -4,11 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_accounts.*
+import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_accounts.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
@@ -17,7 +14,7 @@ import javax.inject.Inject
 /**
  * Фрагмент для счетов.
  */
-class AccountsFragment : DaggerFragment() {
+class AccountsActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -28,19 +25,21 @@ class AccountsFragment : DaggerFragment() {
 
     private val accountListAdapter = AccountListAdapter(listOf()) { position -> onDeleteAccount(position) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        activity?.title = getString(R.string.title_fragment_accounts)
-        return inflater.inflate(R.layout.fragment_accounts, container, false)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_accounts)
 
-        account_list.layoutManager = LinearLayoutManager(context)
+        val supportActionBar = supportActionBar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        title = getString(R.string.title_fragment_accounts)
+
+        account_list.layoutManager = LinearLayoutManager(this)
         account_list.adapter = accountListAdapter
 
         add_account.setOnClickListener { onAddAccount() }
+
     }
 
     override fun onStart() {
@@ -54,16 +53,17 @@ class AccountsFragment : DaggerFragment() {
     }
 
     private fun onAddAccount() {
-        AddAccountDialogFragment.newInstance().show(fragmentManager, "AddAccountDialogFragment")
+        AddAccountDialogFragment.newInstance().show(supportFragmentManager, "AddAccountDialogFragment")
     }
 
     private fun onDeleteAccount(position: Int) {
         OnDeleteAccountDialogFragment.newInstance { viewModel.onDeleteAccount(position) }
-                .show(fragmentManager, "OnDeleteAccountDialogFragment")
+                .show(supportFragmentManager, "OnDeleteAccountDialogFragment")
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = AccountsFragment()
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
+
 }

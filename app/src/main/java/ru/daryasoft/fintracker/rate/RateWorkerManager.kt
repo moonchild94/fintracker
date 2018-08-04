@@ -1,5 +1,6 @@
 package ru.daryasoft.fintracker.rate
 
+import android.util.Log
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequest
@@ -16,6 +17,7 @@ class RateWorkerManager {
 //                .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
+
         //todo проверять, что ранее не загружены
         val oneTimeWorkRequest = OneTimeWorkRequest.Builder(RateWorker::class.java)
                 .setConstraints(constraints)
@@ -24,6 +26,7 @@ class RateWorkerManager {
 
         val statusesByTag = WorkManager.getInstance()?.getStatusesByTag(WORK_MANAGER_TAG)?.value
         if (statusesByTag == null || statusesByTag.isEmpty() || statusesByTag[0] == null || statusesByTag[0].state.isFinished) {
+            Log.d("WorkerManager", "StartNewPeriodicWorker")
             val periodicWorkRequest = PeriodicWorkRequest.Builder(RateWorker::class.java, 12, TimeUnit.HOURS, 1, TimeUnit.HOURS)
                     .setConstraints(constraints)
                     .addTag(WORK_MANAGER_TAG)
