@@ -54,7 +54,7 @@ class TransactionRepositoryImpl @Inject constructor(accountRepository: AccountRe
         mutableList?.add(transaction)
         transactions.value = mutableList
 
-        transaction.account.money.value.add( if (transaction.category.transactionType == TransactionType.INCOME)
+        transaction.account.money.value = transaction.account.money.value.add( if (transaction.category.transactionType == TransactionType.INCOME)
            transaction.sum.value else -transaction.sum.value)
     }
 

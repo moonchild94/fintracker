@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class Money(_value: BigDecimal, val currency: Currency)  {
-    val value:BigDecimal = _value.setScale(2, RoundingMode.HALF_UP)
+    var value:BigDecimal = _value.setScale(2, RoundingMode.HALF_UP)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
