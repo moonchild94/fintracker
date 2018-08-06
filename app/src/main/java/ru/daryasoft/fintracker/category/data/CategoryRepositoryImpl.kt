@@ -1,7 +1,9 @@
-package ru.daryasoft.fintracker.category
+package ru.daryasoft.fintracker.category.data
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import kotlinx.coroutines.experimental.launch
+import ru.daryasoft.fintracker.common.AppDatabase
 import ru.daryasoft.fintracker.entity.Category
 import ru.daryasoft.fintracker.entity.TransactionType
 import javax.inject.Inject
@@ -9,7 +11,7 @@ import javax.inject.Inject
 /**
  * Репозиторий для работы с категориями.
  */
-class CategoryRepositoryImpl @Inject constructor() : CategoryRepository {
+class CategoryRepositoryImpl @Inject constructor(db: AppDatabase) : CategoryRepository {
 
     private val categories = MutableLiveData<List<Category>>()
 
@@ -23,6 +25,12 @@ class CategoryRepositoryImpl @Inject constructor() : CategoryRepository {
                         "ic_transport"),
                 Category("Еда", TransactionType.OUTCOME,
                         "ic_food"))
+        launch {
+            db.categoryDao().insert(Category("Зарплата", TransactionType.INCOME,"ic_salary"))
+            db.categoryDao().insert(Category("Сбережения", TransactionType.INCOME,"ic_saving"))
+            db.categoryDao().insert(Category("Транспорт", TransactionType.OUTCOME,"ic_transport"))
+            db.categoryDao().insert(Category("Еда", TransactionType.OUTCOME,"ic_food"))
+        }
     }
 
     override fun getAll(): LiveData<List<Category>> {

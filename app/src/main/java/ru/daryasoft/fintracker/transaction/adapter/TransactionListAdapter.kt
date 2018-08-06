@@ -1,6 +1,5 @@
 package ru.daryasoft.fintracker.transaction.adapter
 
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat.getDateFormat
 import android.view.LayoutInflater
@@ -9,18 +8,18 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.transaction_item.view.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.common.LocaleUtils
-import ru.daryasoft.fintracker.entity.Transaction
 import ru.daryasoft.fintracker.entity.TransactionType
+import ru.daryasoft.fintracker.entity.TransactionUI
 
 
 /**
  * Адаптер для отображения списка транзакций.
  */
-class TransactionListAdapter(private var transactions: List<Transaction>,
+class TransactionListAdapter(private var transactionDBS: List<TransactionUI>,
                              private val onDeleteAction: (position: Int) -> Unit) : RecyclerView.Adapter<TransactionListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val transaction = transactions[position]
+        val transaction = transactionDBS[position]
         holder.setData(transaction)
     }
 
@@ -30,11 +29,11 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
     }
 
     override fun getItemCount(): Int {
-        return transactions.size
+        return transactionDBS.size
     }
 
-    fun setData(changedTransactions: List<Transaction>) {
-        transactions = changedTransactions
+    fun setData(changedTransactionDBS: List<TransactionUI>) {
+        transactionDBS = changedTransactionDBS
         notifyDataSetChanged() //Добавить DiffUtil
     }
 
@@ -47,15 +46,15 @@ class TransactionListAdapter(private var transactions: List<Transaction>,
             }
         }
 
-        fun setData(transaction: Transaction) {
-            val uri = Uri.parse("android.resource://ru.daryasoft.fintracker/drawable/" + transaction.category.iconUri)
+        fun setData(transactionDB: TransactionUI) {
+//            val uri = Uri.parse("android.resource://ru.daryasoft.fintracker/drawable/" + transactionDB.category.iconUri)
 
-            itemView.category_icon.setImageURI(uri)
-            itemView.transaction_type.setImageDrawable(itemView.context.resources.getDrawable(getIconForTransactionType(transaction.category.transactionType)))
-            itemView.transaction_sum.text = localeUtils.formatBigDecimal( transaction.sum.value)
-            itemView.transaction_currency.text =  localeUtils.formatCurrency(transaction.account.money.currency)
-            itemView.transaction_date.text = getDateFormat(itemView.context).format(transaction.date)
-            itemView.transaction_date.text = transaction.account.name
+//            itemView.category_icon.setImageURI(uri)
+            itemView.transaction_type.setImageDrawable(itemView.context.resources.getDrawable(getIconForTransactionType(transactionDB.category.transactionType)))
+            itemView.transaction_sum.text = localeUtils.formatBigDecimal( transactionDB.sum.value)
+            itemView.transaction_currency.text =  localeUtils.formatCurrency(transactionDB.sum.currency)
+            itemView.transaction_date.text = getDateFormat(itemView.context).format(transactionDB.date)
+            itemView.transaction_date.text = transactionDB.nameAccount
         }
 
         private fun getIconForTransactionType(transactionType: TransactionType): Int {

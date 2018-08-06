@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.account
+package ru.daryasoft.fintracker.account.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

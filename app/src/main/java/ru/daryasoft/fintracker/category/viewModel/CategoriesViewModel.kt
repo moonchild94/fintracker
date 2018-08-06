@@ -1,10 +1,10 @@
-package ru.daryasoft.fintracker.category
+package ru.daryasoft.fintracker.category.viewModel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import ru.daryasoft.fintracker.category.data.CategoryRepository
 import ru.daryasoft.fintracker.entity.Category
 import ru.daryasoft.fintracker.entity.TransactionType
-import ru.daryasoft.fintracker.category.CategoryRepository
 import javax.inject.Inject
 
 /**

@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.account
+package ru.daryasoft.fintracker.account.ui
 
 import android.app.AlertDialog
 import android.app.Dialog

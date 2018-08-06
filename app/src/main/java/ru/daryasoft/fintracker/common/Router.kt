@@ -2,8 +2,8 @@ package ru.daryasoft.fintracker.common
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
-import ru.daryasoft.fintracker.account.AccountsActivity
-import ru.daryasoft.fintracker.category.CategoriesActivity
+import ru.daryasoft.fintracker.account.ui.AccountsActivity
+import ru.daryasoft.fintracker.category.ui.CategoriesActivity
 import ru.daryasoft.fintracker.transaction.ui.AddTransactionActivity
 import javax.inject.Inject
 import javax.inject.Singleton

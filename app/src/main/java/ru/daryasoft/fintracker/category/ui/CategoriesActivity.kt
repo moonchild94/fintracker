@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.category
+package ru.daryasoft.fintracker.category.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

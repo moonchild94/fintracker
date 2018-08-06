@@ -2,9 +2,9 @@ package ru.daryasoft.fintracker.balance
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import ru.daryasoft.fintracker.account.AccountRepository
+import ru.daryasoft.fintracker.account.data.AccountRepository
 import ru.daryasoft.fintracker.calculator.TransactionCalculationService
-import ru.daryasoft.fintracker.category.CategoryRepository
+import ru.daryasoft.fintracker.category.data.CategoryRepository
 import ru.daryasoft.fintracker.common.Constants
 import ru.daryasoft.fintracker.entity.*
 import ru.daryasoft.fintracker.rate.RateRepository

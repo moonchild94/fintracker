@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import ru.daryasoft.fintracker.common.SingleLiveEvent
-import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.entity.*
 import ru.daryasoft.fintracker.transaction.data.TransactionRepository
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class TransactionsViewModel @Inject constructor(private val transactionRepositor
 
     private val _showDialogDelete = SingleLiveEvent<Any>()
     private var positionDelete: Int = -1
-    private var _positionCancelDelete: MutableLiveData<Int> = MutableLiveData<Int>()
+    private var _positionCancelDelete: MutableLiveData<Int> = MutableLiveData()
 
     val positionCancelDelete: LiveData<Int>
         get() = _positionCancelDelete
@@ -23,7 +23,7 @@ class TransactionsViewModel @Inject constructor(private val transactionRepositor
     val showDialogDelete: LiveData<Any>
         get() = _showDialogDelete
 
-    val transactions: LiveData<List<Transaction>> by lazy {
+    val _transactions: LiveData<List<TransactionUI>> by lazy {
         transactionRepository.getAll()
     }
 
@@ -34,7 +34,10 @@ class TransactionsViewModel @Inject constructor(private val transactionRepositor
 
     fun onConfirmDeleteTransaction() {
         if (positionDelete != -1) {
-            transactions.value?.get(positionDelete)?.let { transactionRepository.delete(it) }
+            _transactions.value?.get(positionDelete)?.let {
+                val sum = it.sumAccount.minus(it.sum.value)
+                transactionRepository.delete(it, sum)
+            }
             positionDelete = -1
         }
     }
@@ -47,7 +50,12 @@ class TransactionsViewModel @Inject constructor(private val transactionRepositor
     }
 
 
-    fun onAddTransaction(transaction: Transaction) {
-        transactionRepository.add(transaction)
+    fun onAddTransaction(account: Account, transactionDB: TransactionDB, category: Category) {
+        transactionDB.idCategory = category.idKeyCategory
+        transactionDB.idAccount = account.id
+        account.money.value = transactionDB.account.money.value.add(if (transactionDB.category.transactionType == TransactionType.INCOME)
+            transactionDB.sum.value else -transactionDB.sum.value)
+
+        transactionRepository.add(transactionDB, account)
     }
 }

@@ -3,7 +3,9 @@ package ru.daryasoft.fintracker.transaction.data
 import android.arch.lifecycle.LiveData
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Category
-import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.entity.TransactionDB
+import ru.daryasoft.fintracker.entity.TransactionUI
+import java.math.BigDecimal
 
 /**
  * Репозиторий для работы с финансовыми транзакциями.
@@ -12,7 +14,7 @@ interface TransactionRepository {
     /**
      * Получить все финансовые транзакции.
      */
-    fun getAll(): LiveData<List<Transaction>>
+    fun getAll(): LiveData<List<TransactionUI>>
 
     /**
      * Ищет транзакции по категории и счету.
@@ -20,19 +22,19 @@ interface TransactionRepository {
      * @category категория, по которой нужно выполнить поиск.
      * @account счет, по которому нужно выполнить поиск.
      */
-    fun query(category: Category, account: Account?): LiveData<List<Transaction>>
+    fun query(category: Category, account: Account?): LiveData<List<TransactionUI>>
 
     /**
      * Добавляет транзакцию.
      *
-     * @transaction транзакция для добавления.
+     * @transactionDB транзакция для добавления.
      */
-    fun add(transaction: Transaction)
+    fun add(transactionDB: TransactionDB, account: Account)
 
     /***
      * Удаляет транзакцию.
      *
-     * @transaction транзакция для удаления.
+     * @transactionDB транзакция для удаления.
      */
-    fun delete(transaction: Transaction)
+    fun delete(transactionDB: TransactionUI, value: BigDecimal)
 }

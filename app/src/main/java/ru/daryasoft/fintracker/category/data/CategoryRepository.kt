@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.category
+package ru.daryasoft.fintracker.category.data
 
 import android.arch.lifecycle.LiveData
 import ru.daryasoft.fintracker.entity.Category

@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.account
+package ru.daryasoft.fintracker.account.ui
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.account.viewModel.AccountsViewModel
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
 import ru.daryasoft.fintracker.entity.Currency

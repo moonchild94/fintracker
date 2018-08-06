@@ -1,4 +1,4 @@
-package ru.daryasoft.fintracker.account
+package ru.daryasoft.fintracker.account.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_accounts.*
 import ru.daryasoft.fintracker.R
+import ru.daryasoft.fintracker.account.adapter.AccountListAdapter
+import ru.daryasoft.fintracker.account.viewModel.AccountsViewModel
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.entity.Account
 import javax.inject.Inject

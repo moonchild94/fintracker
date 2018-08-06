@@ -8,11 +8,12 @@ import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_add_transaction.*
 import ru.daryasoft.fintracker.R
-import ru.daryasoft.fintracker.account.AccountsViewModel
-import ru.daryasoft.fintracker.category.CategoriesViewModel
+import ru.daryasoft.fintracker.account.viewModel.AccountsViewModel
+import ru.daryasoft.fintracker.category.viewModel.CategoriesViewModel
 import ru.daryasoft.fintracker.common.CustomArrayAdapter
 import ru.daryasoft.fintracker.common.getViewModel
 import ru.daryasoft.fintracker.common.hideKeyboard
@@ -21,9 +22,8 @@ import ru.daryasoft.fintracker.transaction.viewModel.TransactionsViewModel
 import java.util.*
 import javax.inject.Inject
 
-/**
- * Фрагмент, который отображается при создании счета.
- */
+
+
 class AddTransactionActivity : DaggerAppCompatActivity() {
 
     @Inject
@@ -32,7 +32,29 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
     private val transactionsViewModel: TransactionsViewModel by lazy { getViewModel<TransactionsViewModel>(viewModelFactory) }
     private val categoriesViewModel: CategoriesViewModel by lazy { getViewModel<CategoriesViewModel>(viewModelFactory) }
     private val accountsViewModel: AccountsViewModel by lazy { getViewModel<AccountsViewModel>(viewModelFactory) }
+    private val accountsObserver: android.arch.lifecycle.Observer<List<Account>> by lazy {
+        android.arch.lifecycle.Observer<List<Account>> { list ->
+            run {
+                listAccount.clear()
+                listAccount.addAll(list ?: listOf())
+                (transaction_account_spinner.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+            }
+        }
+    }
+    private val categoryObserver: android.arch.lifecycle.Observer<List<Category>> by lazy {
+        android.arch.lifecycle.Observer<List<Category>> { list ->
+            run {
+                listCategories.clear()
+                listCategories.addAll(list ?: listOf())
+                (category_spinner.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+            }
+        }
+    }
 
+    private var listAccount: MutableList<Account> = mutableListOf()
+    private var listCategories: MutableList<Category> = mutableListOf()
+
+//    private val accountListAdapter = CustomArrayAdapter<Account>(this, listAccount) { account -> account.name }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +85,7 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                category_spinner.adapter = CustomArrayAdapter(applicationContext,
-                        categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).value
-                                ?: listOf()
-                ) { category -> category.name }
-
-
+                categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).observe(this@AddTransactionActivity, categoryObserver)
             }
         }
     }
@@ -93,9 +110,9 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
         }
     }
 
+
     private fun initAccountSpinner() {
-        transaction_account_spinner.adapter = CustomArrayAdapter(this, accountsViewModel.accounts.value
-                ?: listOf()) { account -> account.name }
+        transaction_account_spinner.adapter = CustomArrayAdapter<Account>(this, listAccount) { account -> account.name }
         transaction_account_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(adapter: AdapterView<*>) {
             }
@@ -104,12 +121,15 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
                 transaction_currency.text = (transaction_account_spinner.selectedItem as Account).money.currency.name
             }
         }
+
+        accountsViewModel.accounts.observe(this, accountsObserver)
     }
 
     private fun initCategorySpinner() {
-        category_spinner.adapter = CustomArrayAdapter(this,
-                categoriesViewModel.getCategoriesByType(TransactionType.OUTCOME).value ?: listOf())
+        category_spinner.adapter = CustomArrayAdapter(this, listCategories)
         { category -> category.name }
+
+        categoriesViewModel.categories.observe(this, categoryObserver)
     }
 
     private fun initOkButton() {
@@ -130,8 +150,9 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
             val transactionSum = transaction_amount.text.toString().toDouble()
             val date = Date()
             val category = category_spinner.selectedItem as Category
-            val transaction = Transaction(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category)
-            transactionsViewModel.onAddTransaction(transaction)
+            val transaction = TransactionDB(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category)
+
+            transactionsViewModel.onAddTransaction(account, transaction, category)
             hideKeyboard(transaction_amount)
             onBackPressed()
         }

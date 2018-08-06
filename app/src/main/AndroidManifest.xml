@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".category.ui.CategoriesActivity" />
+        <activity android:name=".account.ui.AccountsActivity" />
         <activity android:name=".transaction.ui.AddTransactionActivity" />
-        <activity android:name=".category.CategoriesActivity" />
-        <activity android:name=".account.AccountsActivity" />
     </application>
 
 </manifest>

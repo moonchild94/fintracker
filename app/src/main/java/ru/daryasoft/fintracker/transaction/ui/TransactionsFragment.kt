@@ -13,7 +13,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.daryasoft.fintracker.R
 import ru.daryasoft.fintracker.common.getViewModel
-import ru.daryasoft.fintracker.entity.Transaction
+import ru.daryasoft.fintracker.entity.TransactionUI
 import ru.daryasoft.fintracker.transaction.adapter.TransactionItemTouchHelper
 import ru.daryasoft.fintracker.transaction.adapter.TransactionListAdapter
 import ru.daryasoft.fintracker.transaction.viewModel.TransactionsViewModel
@@ -36,8 +36,8 @@ class TransactionsFragment : DaggerFragment(), DeleteTransactionDialogFragment.I
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: TransactionsViewModel by lazy { getViewModel<TransactionsViewModel>(viewModelFactory) }
-    private val observer: Observer<List<Transaction>> by lazy {
-        Observer<List<Transaction>> { list -> transactionListAdapter.setData(list ?: listOf()) }
+    private val _observer: Observer<List<TransactionUI>> by lazy {
+        Observer<List<TransactionUI>> { list -> transactionListAdapter.setData(list ?: listOf()) }
     }
     private val observerCancelDelete: Observer<Int> by lazy {
         Observer<Int> { it -> it?.let { transactionListAdapter.notifyItemChanged(it) } }
@@ -67,7 +67,7 @@ class TransactionsFragment : DaggerFragment(), DeleteTransactionDialogFragment.I
 
     override fun onStart() {
         super.onStart()
-        viewModel.transactions.observe(this, observer)
+        viewModel._transactions.observe(this, _observer)
         viewModel.positionCancelDelete.observe(this, observerCancelDelete)
 
         viewModel.showDialogDelete.observe(this, Observer {
@@ -77,7 +77,7 @@ class TransactionsFragment : DaggerFragment(), DeleteTransactionDialogFragment.I
     }
 
     override fun onStop() {
-        viewModel.transactions.removeObserver(observer)
+        viewModel._transactions.removeObserver(_observer)
         viewModel.positionCancelDelete.removeObserver(observerCancelDelete)
         super.onStop()
     }
