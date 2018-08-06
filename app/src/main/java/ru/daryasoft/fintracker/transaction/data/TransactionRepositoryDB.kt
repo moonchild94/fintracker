@@ -11,6 +11,20 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 class TransactionRepositoryDB @Inject constructor(db: AppDatabase) : TransactionRepository {
+    override fun getAccount(id: Long): Account {
+        return dao.getAccountById(id)
+    }
+
+    override fun addPeriodicity(transactionDB: TransactionDB, idOldTransactionDB: Long, value: BigDecimal) {
+        launch {
+            dao.insertPeriodicity(transactionDB, idOldTransactionDB, value)
+        }
+    }
+
+    override fun getPeriodicity(): List<TransactionDB> {
+        return dao.getPeriodisity()
+    }
+
     private val dao = db.transactionDao()
     private var transactions = dao.getAll()
 

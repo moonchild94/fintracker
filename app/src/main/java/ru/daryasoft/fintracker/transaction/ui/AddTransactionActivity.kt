@@ -23,7 +23,6 @@ import java.util.*
 import javax.inject.Inject
 
 
-
 class AddTransactionActivity : DaggerAppCompatActivity() {
 
     @Inject
@@ -66,6 +65,7 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
 
         initTransactionTypeSwitcher()
         initTransactionDateSelector()
+        initTransactionPeriodicitySwitcher()
         initAccountSpinner()
         initCategorySpinner()
         initOkButton()
@@ -88,6 +88,12 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
                 categoriesViewModel.getCategoriesByType(transaction_type_spinner.selectedItem as TransactionType).observe(this@AddTransactionActivity, categoryObserver)
             }
         }
+    }
+
+    private fun initTransactionPeriodicitySwitcher() {
+        spinner_periodicity.adapter = CustomArrayAdapter(this,
+                Periodicity.values().toList()) { transactionType -> getString(transactionType.resId) }
+
     }
 
     private fun initTransactionDateSelector() {
@@ -150,7 +156,8 @@ class AddTransactionActivity : DaggerAppCompatActivity() {
             val transactionSum = transaction_amount.text.toString().toDouble()
             val date = Date()
             val category = category_spinner.selectedItem as Category
-            val transaction = TransactionDB(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category)
+            val periodicity = spinner_periodicity.selectedItem as Periodicity
+            val transaction = TransactionDB(account, Money(transactionSum.toBigDecimal(), account.money.currency), date, category, periodicity)
 
             transactionsViewModel.onAddTransaction(account, transaction, category)
             hideKeyboard(transaction_amount)

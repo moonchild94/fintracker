@@ -18,13 +18,15 @@ import java.util.*
 data class TransactionDB(
         @Ignore
         @Embedded
-        var account: Account,
+        var account: Account, //В будущем необходимо удалить
         @Embedded
         var sum: Money,
         var date: Date,
         @Ignore
         @Embedded
         var category: Category,
+        var periodicity: Periodicity = Periodicity.Without,
+        var isScheduled: Boolean = true,
         @PrimaryKey(autoGenerate = true)
         var id: Long? = null,
         var idAccount: Long? = account.id,

@@ -2,6 +2,7 @@ package ru.daryasoft.fintracker.common
 
 import android.arch.persistence.room.TypeConverter
 import ru.daryasoft.fintracker.entity.Currency
+import ru.daryasoft.fintracker.entity.Periodicity
 import ru.daryasoft.fintracker.entity.TransactionType
 import java.math.BigDecimal
 import java.util.*
@@ -50,10 +51,24 @@ class BDConverter {
 
     @TypeConverter
     fun toTransactionType(value: Int): TransactionType {
-        return  when(value ){
+        return when (value) {
             TransactionType.INCOME.code -> TransactionType.INCOME
             TransactionType.OUTCOME.code -> TransactionType.OUTCOME
             else -> throw IllegalArgumentException("Not found TypeTransaction")
+        }
+    }
+
+    @TypeConverter
+    fun fromPeriodicity(value: Periodicity?): Int {
+        return value?.code ?: -1
+    }
+
+    @TypeConverter
+    fun toPeriodicity(value: Int): Periodicity {
+        return when (value) {
+            Periodicity.OnceMonth.code -> Periodicity.OnceMonth
+            Periodicity.Without.code -> Periodicity.Without
+            else -> throw IllegalArgumentException("Not found Periodicity")
         }
     }
 }

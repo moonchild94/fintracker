@@ -51,6 +51,8 @@ class TransactionsViewModel @Inject constructor(private val transactionRepositor
 
 
     fun onAddTransaction(account: Account, transactionDB: TransactionDB, category: Category) {
+        transactionDB.isScheduled = transactionDB.periodicity == Periodicity.Without
+
         transactionDB.idCategory = category.idKeyCategory
         transactionDB.idAccount = account.id
         account.money.value = transactionDB.account.money.value.add(if (transactionDB.category.transactionType == TransactionType.INCOME)

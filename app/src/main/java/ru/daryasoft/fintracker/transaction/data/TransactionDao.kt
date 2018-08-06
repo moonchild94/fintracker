@@ -22,6 +22,11 @@ abstract class TransactionDao {
     @Query("SELECT t.value, t.currency, t.date, c.idKeyCategory, c.name, c.transactionType, a.name as nameAccount, a.value as sumAccount,  t.id, t.idAccount , t.idCategory FROM TransactionDB as t JOIN account as a ON idAccount = a.id JOIN category as c on idCategory = c.idKeyCategory where idCategory = :categoryId and idAccount = :accountId")
     abstract fun getQuery(categoryId: Long, accountId: Long): LiveData<List<TransactionUI>>
 
+    @Query("Select * From TransactionDB where isScheduled = 0 and periodicity = 1")
+    abstract fun getPeriodisity(): List<TransactionDB>
+
+    @Query("Select * from account where id = :id")
+    abstract fun getAccountById(id: Long): Account
 
     @Transaction
     open fun deleteTransaction(transactionUI: TransactionUI,  value: BigDecimal){
@@ -35,7 +40,10 @@ abstract class TransactionDao {
     @Query("Update account set value = :value where id = :id")
     abstract fun updateAccount(id: Long, value: BigDecimal)
 
-    @Insert//(onConflict = OnConflictStrategy.REPLACE)
+    @Query("UPDATE transactiondb set isScheduled = 1 where id = :id")
+    abstract fun updateSchedule(id: Long)
+
+    @Insert
     abstract fun insertTransaction(transactionDB: TransactionDB)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -45,6 +53,13 @@ abstract class TransactionDao {
     open fun insertTransaction(transactionDB: TransactionDB, account: Account) {
         insertAccount(account)
         insertTransaction(transactionDB)//Имеет смысл заменить на update
+    }
+
+    @Transaction
+    open fun insertPeriodicity(transactionDB: TransactionDB, idOldTransactionDB: Long, value: BigDecimal){
+        insertTransaction(transactionDB)
+        updateAccount(transactionDB.idAccount ?: -1, value)
+        updateSchedule(idOldTransactionDB)
     }
 
 }

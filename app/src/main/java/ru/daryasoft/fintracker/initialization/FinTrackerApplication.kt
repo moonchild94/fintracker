@@ -4,6 +4,7 @@ import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.DaggerApplication
 import dagger.android.support.HasSupportFragmentInjector
+import ru.daryasoft.fintracker.periodicity.PeriodicityWorkManager
 import ru.daryasoft.fintracker.rate.RateWorkerManager
 
 
@@ -23,8 +24,9 @@ class FinTrackerApplication : DaggerApplication(), HasActivityInjector, HasSuppo
     override fun onCreate() {
         super.onCreate()
         val rateWorkManager = RateWorkerManager()
-
         rateWorkManager.onStart()
 
+        val periodicityWorkManager = PeriodicityWorkManager()
+        periodicityWorkManager.onStart()
     }
 }

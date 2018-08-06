@@ -37,4 +37,10 @@ interface TransactionRepository {
      * @transactionDB транзакция для удаления.
      */
     fun delete(transactionDB: TransactionUI, value: BigDecimal)
+
+    fun getPeriodicity(): List<TransactionDB>
+
+    fun addPeriodicity(transactionDB: TransactionDB, idOldTransactionDB: Long, value: BigDecimal)
+
+    fun getAccount(id: Long): Account
 }

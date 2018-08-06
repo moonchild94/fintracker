@@ -1,10 +1,7 @@
 package ru.daryasoft.fintracker.rate
 
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.OneTimeWorkRequest
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import java.util.concurrent.TimeUnit
 
 
@@ -14,7 +11,7 @@ class RateWorkerManager {
 
     fun onStart() {
         val constraints = Constraints.Builder()
-//                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
 
